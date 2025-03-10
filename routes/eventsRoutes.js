@@ -3,21 +3,20 @@ const mysql = require('mysql');
 const router = express.Router();
 
  // CREATE events (POST)
-router.post('/events', (req, res) => {
-    const { event_id, event_name, description, event_date, venue, 
-        total_tickets, created_at } = req.body;
-    const sql = `INSERT INTO events (event_id, event_name, description, 
-    event_date, venue, total_tickets, created_at) VALUES (?, ?, ?, ?, ?, ?, ?)`;
-    db.query(sql, [event_id, event_name, description, event_date, venue, 
-        total_tickets, created_at], (err, result) => {
+ router.post('/events', (req, res) => {
+    const { event_name, description, event_date, venue, total_tickets, created_at } = req.body;
+
+    const sql = `INSERT INTO events (event_name, description, event_date, venue, total_tickets, created_at) 
+                 VALUES (?, ?, ?, ?, ?, ?)`;
+
+    db.query(sql, [event_name, description, event_date, venue, total_tickets, created_at], (err, result) => {
         if (err) {
             return res.status(500).send(err);
         }
-        res.status(201).send({ event_id: result.insertId, event_id, event_name, 
-            description, event_date, venue, total_tickets, created_at});
+        res.status(201).send({ event_id: result.insertId, event_name, description, event_date, venue, total_tickets, created_at });
     });
 });
-   
+
 // READ all events (GET)
 router.get('/events', (req, res) => {
     const sql = `SELECT * FROM events`;
