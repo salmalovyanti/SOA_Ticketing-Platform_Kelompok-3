@@ -1,11 +1,10 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 
+const categoriesRoutes = require('./routes/categoriesRoutes');
 const ticketsRoutes = require('./routes/ticketsRoutes');
 const ordersRoutes = require('./routes/ordersRoutes');
 const eventsRoutes = require('./routes/eventsRoutes');
-const order_itemsRoutes = require('./routes/order_itemsRoutes');
-const paymentsRoutes = require('./routes/paymentsRoutes');
 const usersRoutes = require('./routes/usersRoutes');
 const waitingQueueRoutes = require('./routes/waitingQueueRoutes');
 
@@ -16,11 +15,10 @@ const port = process.env.PORT || 3000;
 app.use(bodyParser.json());
 
 // Routing
+app.use(categoriesRoutes);
 app.use(ticketsRoutes);
 app.use(ordersRoutes);
 app.use(eventsRoutes);
-app.use(order_itemsRoutes);
-app.use(paymentsRoutes);
 app.use(usersRoutes);
 app.use(waitingQueueRoutes);
 

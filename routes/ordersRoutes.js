@@ -4,9 +4,9 @@ const router = express.Router();
 
 // CREATE Orders (POST)
 router.post('/orders', (req, res) => {
-    const { user_id, total_price, order_status } = req.body;
-    const sql = `INSERT INTO orders (user_id, total_price, order_status, created_at) VALUES (?, ?, ?, NOW())`;
-    db.query(sql, [user_id, total_price, order_status], (err, result) => {
+    const { user_id, event_id, ticket_type, quantity, total_price, payment_method, payment_status, paid_at, order_status } = req.body;
+    const sql = `INSERT INTO orders (user_id, event_id, ticket_type, quantity, total_price, payment_method, payment_status, paid_at, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, NOW())`;
+    db.query(sql, [user_id, event_id, ticket_type, quantity, total_price, payment_method, payment_status, paid_at], (err, result) => {
         if (err) {
             res.status(500).json({ error: err.message });
         } else {
