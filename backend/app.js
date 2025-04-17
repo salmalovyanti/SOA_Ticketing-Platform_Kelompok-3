@@ -3,19 +3,20 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const path = require('path');
 const session = require('express-session');
-const passport = require('./config/passport');
+const passport = require('./src/config/passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
-const config = require('./config/config'); 
+const config = require('./src/config/config'); 
 
 // Import Routes
-const ticketsRoutes = require('./routes/ticketsRoutes');
-const ordersRoutes = require('./routes/ordersRoutes');
-const eventsRoutes = require('./routes/eventsRoutes');
-const order_itemsRoutes = require('./routes/order_itemsRoutes');
-const paymentsRoutes = require('./routes/paymentsRoutes');
-const usersRoutes = require('./routes/usersRoutes');
-const waitingQueueRoutes = require('./routes/waitingQueueRoutes');
-const authRoutes = require('./routes/authRoutes'); // Ini cukup sekali
+const ticketsRoutes = require('./src/routes/ticketsRoutes');
+const ordersRoutes = require('./src/routes/ordersRoutes');
+// const eventsRoutes = require('./routes/eventsRoutes');
+const eventRoutes = require('./src/pages/event/event.routes');
+// const order_itemsRoutes = require('./routes/order_itemsRoutes');
+// const paymentsRoutes = require('./src/routes/paymentsRoutes');
+const usersRoutes = require('./src/routes/usersRoutes');
+const waitingQueueRoutes = require('./src/routes/waitingQueueRoutes');
+const authRoutes = require('./src/routes/authRoutes'); // Ini cukup sekali
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -23,7 +24,7 @@ const port = process.env.PORT || 3000;
 
 // Konfigurasi CORS — biarkan akses dari frontend di port 5500
 app.use(cors({
-    origin: 'http://127.0.0.1:5500', // Pastikan ini sesuai dengan frontend yang sedang kamu pakai
+    origin: ['http://127.0.0.1:5500', 'http://localhost:5000'], // Pastikan ini sesuai dengan frontend yang sedang kamu pakai
     methods: ['GET', 'POST'],
     credentials: true
   }));
@@ -45,18 +46,19 @@ app.use(cors({
 // Routing API
 app.use(ticketsRoutes);
 app.use(ordersRoutes);
-app.use(eventsRoutes);
-app.use(order_itemsRoutes);
-app.use(paymentsRoutes);
+// app.use(eventsRoutes);
+app.use('/api/events', eventRoutes);
+// app.use(order_itemsRoutes);
+// app.use(paymentsRoutes);
 app.use(usersRoutes);
 app.use(waitingQueueRoutes);
-app.use(authRoutes); // Pastikan route login/register masuk ke sini
+app.use('/api/auth', authRoutes); // Pastikan route login/register masuk ke sini
 
 // Inisialisasi Passport
 app.use(passport.initialize());
 app.use(passport.session());
 
-const User = require('./models/user'); // pastikan path-nya benar
+const User = require('./src/models/user'); // pastikan path-nya benar
 
 passport.use(new GoogleStrategy({
   clientID: config.googleClientID,
@@ -108,7 +110,7 @@ app.get('/auth/callback',
   }),
   (req, res) => {
     // Jika login berhasil, redirect ke frontend (dashboard misalnya)
-    res.redirect('http://127.0.0.1:5500/public/dashboard.html');
+    res.redirect('http://localhost:5000/');
   });
 
 // Jika login gagal
