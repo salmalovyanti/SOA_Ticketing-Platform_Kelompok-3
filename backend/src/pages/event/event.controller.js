@@ -31,3 +31,25 @@ exports.getEventById = async (req, res) => {
     res.status(500).json({ error: 'Server error' });
   }
 };
+
+exports.getByCategory = async (req, res) => {
+  try {
+    const categoryId = req.params.id;
+    const events = await service.getByCategory(categoryId);
+    res.json(events);
+  } catch (error) {
+    console.error('Error fetching events by category:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
+
+exports.getByLocation = async (req, res) => {
+  try {
+    const locationId = req.params.id;
+    const events = await service.getByLocation(locationId);
+    res.json(events);
+  } catch (error) {
+    console.error('Error fetching events by location:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+};

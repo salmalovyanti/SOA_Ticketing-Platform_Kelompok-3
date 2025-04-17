@@ -27,10 +27,6 @@ const Event = sequelize.define('Event', {
     type: DataTypes.BIGINT,
     allowNull: true
   },
-  venue: {
-    type: DataTypes.STRING(255),
-    allowNull: true
-  },
   total_tickets: {
     type: DataTypes.INTEGER,
     allowNull: true
