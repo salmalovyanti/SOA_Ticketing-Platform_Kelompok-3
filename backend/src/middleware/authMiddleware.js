@@ -1,19 +1,30 @@
 const jwt = require('jsonwebtoken');
-const SECRET_KEY = 'tikeroo_secret_key';
+const redisClient = require('../config/redisClient'); // pastikan file redisClient.js ada
+require('dotenv').config();
+
+const SECRET_KEY = process.env.JWT_SECRET || 'tikeroo_secret_key';
 
 // Middleware untuk autentikasi token
-function authenticateToken(req, res, next) {
+async function authenticateToken(req, res, next) {
     const authHeader = req.headers['authorization'];
     const token = authHeader && authHeader.split(' ')[1];
 
     if (!token) return res.sendStatus(401); // Unauthorized
 
-    jwt.verify(token, SECRET_KEY, (err, user) => {
-        if (err) return res.sendStatus(403); // Forbidden
+    try {
+        const decoded = jwt.verify(token, SECRET_KEY);
 
-        req.user = user; // Menyimpan user info dari token
+        // Cek apakah token masih valid di Redis
+        const storedToken = await redisClient.get(decoded.email);
+        if (!storedToken || storedToken !== token) {
+            return res.status(403).json({ message: 'Token tidak valid atau sudah logout' });
+        }
+
+        req.user = decoded; // Menyimpan info user dari token
         next();
-    });
+    } catch (err) {
+        return res.sendStatus(403); // Forbidden
+    }
 }
 
 // Middleware untuk memastikan user adalah admin
