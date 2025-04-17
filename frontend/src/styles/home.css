@@ -1,0 +1,18 @@
+.hero {
+    background-color: #6b001c;
+    color: white;
+    text-align: center;
+    padding: 2rem 1rem;
+  }
+  
+  .section {
+    padding: 2rem;
+    background: #e3f2fd;
+  }
+  
+  .event-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1rem;
+  }
