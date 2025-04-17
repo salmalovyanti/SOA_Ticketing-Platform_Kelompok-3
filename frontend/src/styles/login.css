@@ -1,47 +1,106 @@
+@import url('https://fonts.googleapis.com/css2?family=Reem+Kufi+Ink&family=Space+Grotesk:wght@300..700&display=swap');
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Space Grotesk', sans-serif;
+  background: radial-gradient(60.15% 142.6% at 7.84% 95.11%, #003049 9.22%, rgba(255, 255, 255, 0) 100%),
+  radial-gradient(78.08% 120.21% at 78.08% 31.01%, #003049 0%, #FFFFFF 100%);
+}
+
+
+
+.login-area {
+  background: radial-gradient(60.15% 142.6% at 7.84% 95.11%, #003049 9.22%, rgba(255, 255, 255, 0) 100%),
+  radial-gradient(78.08% 120.21% at 78.08% 31.01%, #003049 0%, #FFFFFF 100%);
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  /* align-items: center; */
+  padding: 0px;
+  gap: 2rem;
+  position: relative;
+}
+
+.login-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0px;
+  font-family: 'Reem Kufi Ink', sans-serif;
+  /* gap: 34px; */
+}
+
+.login-section h2 {
+  margin-bottom: 1rem;
+  text-align: left;
+  font-size: 32px;
+  font-weight: bold;
+  font-family: 'Reem Kufi Ink', sans-serif;
+  color: #003049;
+}
+
 .login-container {
-    height: 100vh;
-    background: radial-gradient(circle at center, #3f5f72, #a8a3a7);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  .login-box {
-    background: rgba(128, 0, 0, 0.7);
-    padding: 2rem;
-    border-radius: 8px;
-    width: 400px;
-    color: #fff3cc;
-  }
-  
-  .login-box h2 {
-    margin-bottom: 1rem;
-    text-align: center;
-  }
-  
-  .login-box input {
-    width: 100%;
-    padding: 0.75rem;
-    margin-bottom: 1rem;
-    border: none;
-    border-radius: 4px;
-  }
-  
-  .login-box .forgot {
-    display: block;
-    text-align: right;
-    margin-bottom: 1rem;
-    color: #ddd;
-    text-decoration: underline;
-  }
-  
-  .login-box button {
-    width: 100%;
-    padding: 0.75rem;
-    background-color: #fff3cc;
-    color: maroon;
-    font-weight: bold;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
+  height: 100vh;
+  /* display: flex; */
+  align-items: center;
+  justify-content: center;
+}
+
+.login-box {
+  font-family: 'Reem Kufi Ink', sans-serif;
+  background: rgba(193, 18, 31, 0.5);
+  backdrop-filter: blur(7.5px);
+  padding: 1rem;
+  width: 400px;
+  color: #FDF0D5;
+}
+
+form {
+  padding: 1rem;
+  box-sizing: border-box;
+}
+
+form label{
+  margin-bottom: 5px;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.login-box input {
+  width: 100%;
+  padding: 0.75rem;
+  margin-bottom: 1rem;
+  margin-top: .25rem;
+  box-sizing: border-box;
+  border: none;
+  color: #003049;
+  background-color: #FDF0D5;
+}
+
+.login-box .forgot {
+  display: block;
+  text-align: left;
+  font-size: 16px;
+  color: #b1ccde;
+  text-decoration: underline;
+}
+
+.login-section button {
+  width: 100%;
+  padding: 0.75rem;
+  margin-top: 1rem;
+  background-color: #FDF0D5;
+  color: maroon;
+  font-family: 'Reem Kufi Ink', sans-serif;
+  font-size: 20px;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+}
