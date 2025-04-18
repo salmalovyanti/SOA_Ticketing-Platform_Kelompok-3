@@ -17,6 +17,8 @@ const redisClient = redis.createClient({
   },
 });
 redisClient.connect().catch(console.error);
+const { oauth2Client } = require('./config/googleAuth');  // pastikan oauth2Client sesuai
+const { google } = require('googleapis');
 
 // Import Routes
 const categoryRoutes = require('./src/pages/category/category.routes');
@@ -30,6 +32,8 @@ const venueRoutes = require('./src/pages/venue/venue.routes');
 const waitingQueueRoutes = require('./src/pages/waiting_queue/waiting_queue.routes');
 const authRoutes = require('./src/routes/authRoutes');
 const redisRoutes = require('./src/routes/redisRoutes'); // API Redis
+const googleRoutes = require('./routes/googleRoutes');
+
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -46,6 +50,9 @@ app.use(cors(corsOptions));
 app.use(bodyParser.json());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+app.use('/api/google', googleRoutes);
+
 
 // Session Middleware dengan Redis Store
 app.use(
@@ -138,6 +145,30 @@ app.get('/auth/callback',
 // Jika login gagal
 app.get('/auth/failed', (req, res) => {
   res.send('<h2>Login gagal. Silakan coba lagi.</h2>');
+});
+
+// Route untuk menerima callback dari Google OAuth2
+app.get('/oauth2callback', async (req, res) => {
+  const code = req.query.code;  // Ambil authorization code dari URL
+  try {
+    // Tukar authorization code dengan access token
+    const { tokens } = await oauth2Client.getToken(code);
+    oauth2Client.setCredentials(tokens);  // Set credentials di oauth2Client
+
+    // Token berhasil diterima, kamu bisa menyimpan token di tempat yang aman
+    console.log('Tokens:', tokens);
+
+    // Redirect ke halaman atau berikan pesan sukses
+    res.redirect('/success');  // Bisa diganti sesuai kebutuhan
+
+  } catch (error) {
+    console.error('Error getting OAuth tokens:', error);
+    res.status(500).send('Error getting OAuth tokens');
+  }
+});
+
+app.get('/success', (req, res) => {
+  res.send('OAuth2 authentication successful! You can now send emails.');
 });
 
 /* ------------- Static File Serving ------------ */
