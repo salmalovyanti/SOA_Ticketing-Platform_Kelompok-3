@@ -1,5 +1,5 @@
-const db = require('../../config/database'); 
-const { User } = require('../../models'); 
+const db = require('../../config/database');
+const { User } = require('../../models');
 
 exports.create = async (data) => {
   return await User.create(data);
@@ -28,16 +28,23 @@ exports.delete = async (id) => {
 };
 
 exports.updateProfile = async (id, data) => {
-    const user = await User.findByPk(id);
-    if (!user) return null;
-  
-    // Hanya update field tertentu untuk profile
-    const fieldsToUpdate = {};
-    if (data.name !== undefined) fieldsToUpdate.name = data.name;
-    if (data.email !== undefined) fieldsToUpdate.email = data.email;
-    if (data.phone !== undefined) fieldsToUpdate.phone = data.phone;
-  
-    await user.update(fieldsToUpdate);
-    return user;
-  };
-  
+  const user = await User.findByPk(id);
+  if (!user) return null;
+
+  // Hanya update field tertentu untuk profile
+  const fieldsToUpdate = {};
+  if (data.name !== undefined) fieldsToUpdate.name = data.name;
+  if (data.email !== undefined) fieldsToUpdate.email = data.email;
+  if (data.phone !== undefined) fieldsToUpdate.phone = data.phone;
+
+  await user.update(fieldsToUpdate);
+  return user;
+};
+
+exports.updateAvatar = async (id, avatarUrl) => {
+  const user = await User.findByPk(id);
+  if (!user) return null;
+
+  await user.update({ avatar_url: avatarUrl });
+  return user;
+};
