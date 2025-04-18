@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import api from '../api/axios';
-import '../styles/eventDetail.css'; // kamu bisa sesuaikan stylenya
+import { saveOrderOffline } from '../utils/offlineHandler';
 
 const EventDetailPage = () => {
   const { id } = useParams();
@@ -21,6 +21,29 @@ const EventDetailPage = () => {
     fetchEvent();
   }, [id]);
 
+  const handleOrder = async () => {
+    const orderData = {
+      event_id: id,
+      quantity: 1, // contoh kuantitas default
+      user_id: 123, // sesuaikan dari session/login
+    };
+
+    try {
+      await api.post('/api/orders', orderData);
+      alert('Tiket berhasil dibeli!');
+    } catch (error) {
+      if (!navigator.onLine) {
+        await saveOrderOffline(orderData); // simpan ke IndexedDB / localStorage
+        const reg = await navigator.serviceWorker.ready;
+        reg.sync.register('sync-orders'); // trigger sync
+        alert("Kamu sedang offline. Pesanan akan dikirim saat online.");
+      } else {
+        alert('Terjadi kesalahan saat memesan tiket.');
+        console.error(error);
+      }
+    }
+  };
+
   if (!event) return <div>Loading...</div>;
 
   return (
@@ -37,7 +60,6 @@ const EventDetailPage = () => {
             <p><strong>Tanggal:</strong> {new Date(event.event_date).toLocaleString('id-ID')}</p>
             <p><strong>Lokasi:</strong> {event.venue}</p>
             <p>{event.location_detail}</p>
-            {/* Kalau ada iframe peta */}
             {event.venue && (
               <iframe
                 src={`https://maps.google.com/maps?q=${encodeURIComponent(event.venue)}&z=15&output=embed`}
@@ -51,7 +73,7 @@ const EventDetailPage = () => {
           <div className="event-description">
             <h3>Deskripsi</h3>
             <p>{event.description || "Tidak ada deskripsi."}</p>
-            <button className="btn-beli">Beli Tiket</button>
+            <button className="btn-beli" onClick={handleOrder}>Beli Tiket</button> {/* ✅ Tambahkan onClick */}
           </div>
         </div>
       </div>
