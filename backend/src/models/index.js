@@ -5,6 +5,8 @@ const Event = require('../pages/event/event.model');
 const Location = require('../pages/location/location.model');
 const Order = require('../pages/order/order.model');
 const OrderDetail = require('../pages/order_detail/order_detail.model');
+const Payment = require('../pages/payment/payment.model');
+const PromoCode = require('../pages/promo_code/promo_code.model');
 const Ticket = require('../pages/ticket/ticket.model');
 const User = require('../pages/user/user.model');
 const Venue = require('../pages/venue/venue.model');
@@ -34,6 +36,8 @@ module.exports = {
   Location,
   Order,
   OrderDetail,
+  Payment,
+  PromoCode,
   Ticket,
   User,
   Venue,
