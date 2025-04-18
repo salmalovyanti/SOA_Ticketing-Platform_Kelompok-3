@@ -1,4 +1,5 @@
 const service = require('./ticket.service');
+const { purchaseTicketSchema } = require('./ticket.validations');
 
 // Create Ticket
 exports.createTicket = async (req, res) => {
@@ -74,9 +75,6 @@ exports.getByEventId = async (req, res) => {
   }
 };
 
-const ticketService = require('./ticket.service');
-const { purchaseTicketSchema } = require('./ticket.validation');
-
 exports.purchaseTicket = async (req, res) => {
   try {
     // Validate request data
@@ -84,7 +82,7 @@ exports.purchaseTicket = async (req, res) => {
     if (error) return res.status(400).json({ error: error.details[0].message });
 
     // Call service to process ticket purchase
-    const ticketPurchase = await ticketService.purchase(value);
+    const ticketPurchase = await service.purchase(value);
 
     if (!ticketPurchase) {
       return res.status(400).json({ error: 'Ticket purchase failed' });
