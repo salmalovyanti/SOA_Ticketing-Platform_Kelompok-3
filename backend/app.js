@@ -21,15 +21,19 @@ const { oauth2Client } = require('./config/googleAuth');  // pastikan oauth2Clie
 const { google } = require('googleapis');
 
 // Import Routes
+const cartRoutes = require('./src/pages/cart/cart.routes');
 const categoryRoutes = require('./src/pages/category/category.routes');
 const eventRoutes = require('./src/pages/event/event.routes');
 const locationRoutes = require('./src/pages/location/location.routes');
 const orderRoutes = require('./src/pages/order/order.routes');
 const orderDetailRoutes = require('./src/pages/order_detail/order_detail.routes');
+const paymentRoutes = require('./src/pages/payment/payment.routes');
+const promoCodeRoutes = require('./src/pages/promo_code/promo_code.routes');
 const ticketRoutes = require('./src/pages/ticket/ticket.routes');
 const userRoutes = require('./src/pages/user/user.routes');
 const venueRoutes = require('./src/pages/venue/venue.routes');
 const waitingQueueRoutes = require('./src/pages/waiting_queue/waiting_queue.routes');
+const wishlistRoutes = require('./src/pages/wishlist/wishlist.routes');
 const authRoutes = require('./src/routes/authRoutes');
 const redisRoutes = require('./src/routes/redisRoutes'); // API Redis
 const googleRoutes = require('./routes/googleRoutes');
@@ -72,15 +76,19 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // Routing API
+app.use('/api/cart', cartRoutes);
 app.use('/api/category', categoryRoutes);
 app.use('/api/event', eventRoutes);
 app.use('/api/location', locationRoutes);
 app.use('/api/order', orderRoutes);
 app.use('/api/order_detail', orderDetailRoutes);
+app.use('/api/payment', paymentRoutes);
+app.use('/api/promo_code', promoCodeRoutes);
 app.use('/api/ticket', ticketRoutes);
 app.use('/api/user', userRoutes);
 app.use('/api/venue', venueRoutes);
 app.use('/api/waiting_queue', waitingQueueRoutes);
+app.use('/api/wishlist', wishlistRoutes);
 app.use('/api/auth', authRoutes); // Pastikan route login/register masuk ke sini
 app.use(redisRoutes); // Route Redis untuk caching, hit counter, dll.
 
