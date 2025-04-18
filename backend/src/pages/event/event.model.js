@@ -7,9 +7,17 @@ const Event = sequelize.define('Event', {
     primaryKey: true,
     autoIncrement: true
   },
+  organizer_id: {
+    type: DataTypes.BIGINT,
+    allowNull: true
+  },
   event_name: {
     type: DataTypes.STRING(255),
-    allowNull: false
+    allowNull: true
+  },
+  slug: {
+    type: DataTypes.STRING(255),
+    allowNull: true
   },
   description: {
     type: DataTypes.TEXT,
@@ -19,26 +27,48 @@ const Event = sequelize.define('Event', {
     type: DataTypes.DATE,
     allowNull: false
   },
+  start_date: {
+    type: DataTypes.DATE,
+    allowNull: true
+  },
+  end_date: {
+    type: DataTypes.DATE,
+    allowNull: true
+  },
   location_id: {
     type: DataTypes.BIGINT,
-    allowNull: true
+    allowNull: false
   },
   category_id: {
     type: DataTypes.BIGINT,
-    allowNull: true
+    allowNull: false
+  },
+  venue: {
+    type: DataTypes.STRING(255),
+    allowNull: false
   },
   total_tickets: {
     type: DataTypes.INTEGER,
+    allowNull: false
+  },
+  venue_id: {
+    type: DataTypes.BIGINT,
     allowNull: true
   },
-  created_at: {
-    type: DataTypes.DATE,
-    allowNull: false,
-    defaultValue: DataTypes.NOW
+  thumbnail_url: {
+    type: DataTypes.STRING(255),
+    allowNull: true
+  },
+  is_published: {
+    type: DataTypes.BOOLEAN,
+    allowNull: true,
+    defaultValue: false
   }
 }, {
   tableName: 'events',
-  timestamps: false // karena kamu punya created_at manual, bukan Sequelize default
+  timestamps: true,
+  paranoid: true,
+  underscored: true
 });
 
 module.exports = Event;

@@ -10,15 +10,17 @@ const Category = sequelize.define('Category', {
   },
   category_name: {
     type: DataTypes.STRING(100),
-    allowNull: false
+    allowNull: true,
   },
-  created_at: {
-    type: DataTypes.DATE,
-    defaultValue: DataTypes.NOW
+  slug: {
+    type: DataTypes.STRING(100),
+    allowNull: true,
   }
 }, {
   tableName: 'categories',
-  timestamps: false
+  timestamps: true,
+  paranoid: true,
+  underscored: true
 });
 
 module.exports = Category;

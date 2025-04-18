@@ -18,14 +18,12 @@ const WaitingQueue = sequelize.define('WaitingQueue', {
   status: {
     type: DataTypes.ENUM('waiting', 'processing', 'completed'),
     defaultValue: 'waiting'
-  },
-  created_at: {
-    type: DataTypes.DATE,
-    defaultValue: DataTypes.NOW
   }
 }, {
   tableName: 'waiting_queue',
-  timestamps: false
+  timestamps: true,
+  paranoid: true,
+  underscored: true
 });
 
 module.exports = WaitingQueue;

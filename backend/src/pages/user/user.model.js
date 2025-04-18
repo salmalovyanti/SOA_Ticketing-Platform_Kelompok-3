@@ -8,37 +8,39 @@ const User = sequelize.define('User', {
     autoIncrement: true
   },
   name: {
-    type: DataTypes.STRING(100),
-    allowNull: false
+    type: DataTypes.STRING(255),
+    allowNull: true
   },
   email: {
-    type: DataTypes.STRING(100),
-    allowNull: false,
+    type: DataTypes.STRING(255),
+    allowNull: true,
     unique: true
   },
   password_hash: {
     type: DataTypes.STRING(255),
-    allowNull: false
+    allowNull: true
   },
   phone: {
-    type: DataTypes.STRING(15),
+    type: DataTypes.STRING(20),
     allowNull: true
   },
   avatar_url: {
     type: DataTypes.STRING(255),
-    allowNull: true // `false` kalau wajib diisi
+    allowNull: true
   },
   role: {
-    type: DataTypes.ENUM('admin', 'buyer'),
-    defaultValue: 'buyer'
+    type: DataTypes.ENUM('user', 'organizer', 'admin'),
+    allowNull: true
   },
-  created_at: {
+  email_verified_at: {
     type: DataTypes.DATE,
-    defaultValue: DataTypes.NOW
+    allowNull: true
   }
 }, {
   tableName: 'users',
-  timestamps: false
+  timestamps: true,
+  paranoid: true,
+  underscored: true
 });
 
 module.exports = User;

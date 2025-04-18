@@ -7,13 +7,17 @@ const Ticket = sequelize.define('Ticket', {
     primaryKey: true,
     autoIncrement: true
   },
+  name: {
+    type: DataTypes.STRING(255),
+    allowNull: true
+  },
   event_id: {
     type: DataTypes.BIGINT,
     allowNull: false
   },
   ticket_type: {
-    type: DataTypes.ENUM('regular', 'vip', 'vvip'),
-    allowNull: false
+    type: DataTypes.ENUM('early_bird', 'regular', 'vip'),
+    allowNull: true
   },
   price: {
     type: DataTypes.DECIMAL(10, 2),
@@ -23,18 +27,22 @@ const Ticket = sequelize.define('Ticket', {
     type: DataTypes.INTEGER,
     allowNull: false
   },
-  version_number: {
+  sold: {
     type: DataTypes.INTEGER,
+    allowNull: true,
     defaultValue: 0
   },
-  created_at: {
-    type: DataTypes.DATE,
-    allowNull: false,
-    defaultValue: DataTypes.NOW
+  version_number: {
+    type: DataTypes.INTEGER,
+    allowNull: true,
+    defaultValue: 0
   }
 }, {
   tableName: 'tickets',
-  timestamps: false
+  timestamps: true,
+  paranoid: true,
+  underscored: true
 });
+
 
 module.exports = Ticket;

@@ -9,11 +9,11 @@ const OrderDetail = sequelize.define('OrderDetail', {
   },
   order_id: {
     type: DataTypes.BIGINT,
-    allowNull: false
+    allowNull: true
   },
   ticket_id: {
     type: DataTypes.BIGINT,
-    allowNull: false
+    allowNull: true
   },
   ticket_name: {
     type: DataTypes.STRING(255),
@@ -30,22 +30,12 @@ const OrderDetail = sequelize.define('OrderDetail', {
   subtotal: {
     type: DataTypes.DECIMAL(10, 2),
     allowNull: false
-  },
-  created_at: {
-    type: DataTypes.DATE,
-    defaultValue: DataTypes.NOW
-  },
-  updated_at: {
-    type: DataTypes.DATE,
-    defaultValue: DataTypes.NOW
-  },
-  deleted_at: {
-    type: DataTypes.DATE,
-    allowNull: true
   }
 }, {
   tableName: 'order_details',
-  timestamps: false
+  timestamps: true,
+  paranoid: true,
+  underscored: true
 });
 
 module.exports = OrderDetail;

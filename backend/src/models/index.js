@@ -23,6 +23,7 @@ WaitingQueue.belongsTo(Event, { foreignKey: 'event_id', as: 'event' });
 Location.hasMany(Venue, { foreignKey: 'location_id' });
 WaitingQueue.belongsTo(User, { foreignKey: 'user_id', as: 'user' });
 User.hasMany(WaitingQueue, { foreignKey: 'user_id', as: 'waiting_queue' });
+Order.belongsTo(Event, { foreignKey: 'event_id', as: 'event' });
 
 
 

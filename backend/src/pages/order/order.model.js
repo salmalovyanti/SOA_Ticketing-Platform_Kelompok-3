@@ -1,6 +1,5 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../../config/database');
-const Event = require('../event/event.model');
 
 const Order = sequelize.define('Order', {
   order_id: {
@@ -24,9 +23,13 @@ const Order = sequelize.define('Order', {
     type: DataTypes.ENUM('credit_card', 'bank_transfer', 'ewallet'),
     allowNull: true
   },
+  payment_url: {
+    type: DataTypes.STRING(255),
+    allowNull: true
+  },
   payment_status: {
     type: DataTypes.ENUM('pending', 'successful', 'failed'),
-    defaultValue: 'pending'
+    allowNull: true
   },
   paid_at: {
     type: DataTypes.DATE,
@@ -37,22 +40,14 @@ const Order = sequelize.define('Order', {
     allowNull: true
   },
   order_status: {
-    type: DataTypes.ENUM('pending', 'paid', 'cancelled'),
-    defaultValue: 'pending'
-  },
-  created_at: {
-    type: DataTypes.DATE,
-    defaultValue: DataTypes.NOW
+    type: DataTypes.ENUM('pending', 'paid', 'cancelled', 'refunded'),
+    allowNull: true
   }
 }, {
   tableName: 'orders',
-  timestamps: false
-});
-
-// Relasi ke Event
-Order.belongsTo(Event, {
-  foreignKey: 'event_id',
-  as: 'event'
+  timestamps: true,
+  paranoid: true,
+  underscored: true
 });
 
 module.exports = Order;

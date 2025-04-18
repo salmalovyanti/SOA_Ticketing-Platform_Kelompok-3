@@ -10,22 +10,12 @@ const Location = sequelize.define('Location', {
   location_name: {
     type: DataTypes.STRING(255),
     allowNull: false
-  },
-  created_at: {
-    type: DataTypes.DATE,
-    defaultValue: DataTypes.NOW
-  },
-  updated_at: {
-    type: DataTypes.DATE,
-    defaultValue: DataTypes.NOW
-  },
-  deleted_at: {
-    type: DataTypes.DATE,
-    allowNull: true
   }
 }, {
   tableName: 'locations',
-  timestamps: false
+  timestamps: true,
+  paranoid: true,
+  underscored: true
 });
 
 module.exports = Location;

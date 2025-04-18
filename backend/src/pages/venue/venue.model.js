@@ -26,22 +26,12 @@ const Venue = sequelize.define('Venue', {
   html_embed: {
     type: DataTypes.TEXT,
     allowNull: true
-  },
-  created_at: {
-    type: DataTypes.DATE,
-    defaultValue: DataTypes.NOW
-  },
-  updated_at: {
-    type: DataTypes.DATE,
-    defaultValue: DataTypes.NOW
-  },
-  deleted_at: {
-    type: DataTypes.DATE,
-    allowNull: true
   }
 }, {
   tableName: 'venues',
-  timestamps: false
+  timestamps: true,
+  paranoid: true,
+  underscored: true
 });
 
 module.exports = Venue;
