@@ -12,6 +12,7 @@ const Ticket = require('../pages/ticket/ticket.model');
 const User = require('../pages/user/user.model');
 const Venue = require('../pages/venue/venue.model');
 const WaitingQueue = require('../pages/waiting_queue/waiting_queue.model')
+const Wishlist = require('../pages/wishlist/wishlist.model');
 
 // ASSOCIATIONS
 Category.hasMany(Event, { foreignKey: 'category_id' });
@@ -31,8 +32,6 @@ Cart.belongsTo(Ticket, { foreignKey: 'ticket_id', as: 'ticket' });
 Ticket.hasMany(Cart, { foreignKey: 'ticket_id', as: 'carts' });
 
 
-
-
 module.exports = {
   sequelize,
   Cart,
@@ -46,5 +45,6 @@ module.exports = {
   Ticket,
   User,
   Venue,
-  WaitingQueue
+  WaitingQueue,
+  Wishlist
 };
