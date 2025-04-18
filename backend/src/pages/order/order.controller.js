@@ -1,4 +1,5 @@
 const service = require('./order.service');
+const { refundOrderSchema } = require('./order.validations');
 
 // Create Order
 exports.createOrder = async (req, res) => {
@@ -73,5 +74,24 @@ exports.getMyTickets = async (req, res) => {
   } catch (err) {
     console.error('❌ Error saat getMyTickets:', err);
     res.status(500).json({ error: 'Server error' });
+  }
+};
+
+// Request Refund
+exports.requestRefund = async (req, res) => {
+  try {
+    const { error, value } = refundOrderSchema.validate(req.body);
+    if (error) {
+      return res.status(400).json({ error: error.details[0].message });
+    }
+
+    const result = await service.requestRefund(value);
+    res.status(200).json({
+      message: 'Refund request successful',
+      data: result
+    });
+  } catch (err) {
+    console.error('❌ Error saat requestRefund:', err);
+    res.status(400).json({ error: err.message });
   }
 };

@@ -8,5 +8,7 @@ router.get('/:id', controller.getOrderById);
 router.put('/:id', controller.updateOrder);
 router.delete('/:id', controller.deleteOrder);
 router.get('/my-tickets', controller.getMyTickets);
+router.post('/request-refund', controller.requestRefund);
+
 
 module.exports = router;

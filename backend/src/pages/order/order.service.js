@@ -61,3 +61,16 @@ exports.getTicketsByUser = async (userId) => {
     ]
   });
 };
+
+// Request Refund
+exports.requestRefund = async ({ order_id }) => {
+  const order = await Order.findOne({ where: { id: order_id } });
+
+  if (!order) throw new Error('Order not found');
+  if (order.status !== 'paid') throw new Error('Only paid orders can be refunded');
+
+  order.status = 'refunded';
+  await order.save();
+
+  return order;
+}; 

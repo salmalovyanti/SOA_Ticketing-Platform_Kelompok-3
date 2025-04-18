@@ -15,4 +15,9 @@ const updateOrderSchema = Joi.object({
   event_id: Joi.number().integer(), // optional update
 });
 
-module.exports = { createOrderSchema, updateOrderSchema };
+const refundOrderSchema = Joi.object({
+  order_id: Joi.number().integer().required(),
+  reason: Joi.string().max(500).required()
+});
+
+module.exports = { createOrderSchema, updateOrderSchema, refundOrderSchema };
