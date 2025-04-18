@@ -1,5 +1,6 @@
 const sequelize = require('../config/database');
 
+const Cart = require('../pages/cart/cart.model');
 const Category = require('../pages/category/category.model');
 const Event = require('../pages/event/event.model');
 const Location = require('../pages/location/location.model');
@@ -26,11 +27,15 @@ Location.hasMany(Venue, { foreignKey: 'location_id' });
 WaitingQueue.belongsTo(User, { foreignKey: 'user_id', as: 'user' });
 User.hasMany(WaitingQueue, { foreignKey: 'user_id', as: 'waiting_queue' });
 Order.belongsTo(Event, { foreignKey: 'event_id', as: 'event' });
+Cart.belongsTo(Ticket, { foreignKey: 'ticket_id', as: 'ticket' });
+Ticket.hasMany(Cart, { foreignKey: 'ticket_id', as: 'carts' });
+
 
 
 
 module.exports = {
   sequelize,
+  Cart,
   Category,  
   Event,
   Location,
