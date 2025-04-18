@@ -2,9 +2,9 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const path = require('path');
-const passport = require('./config/passport');
+const passport = require('./src/config/passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
-const config = require('./config/config');
+const config = require('./src/config/config');
 require('dotenv').config();
 // redis
 const session = require('express-session');
