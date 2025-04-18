@@ -53,3 +53,18 @@ exports.getByLocation = async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 };
+
+exports.searchEvents = async (req, res) => {
+  try {
+    const keyword = req.query.name;
+    const events = await service.searchEvents(keyword);
+  
+    if (!events || events.length === 0) {
+      return res.status(404).json({ message: 'No events found' });
+    }
+    res.status(200).json(events);
+  } catch (error) {
+    console.error('Error during event search:', error);
+    res.status(500).json({ error: 'Server error' });
+  }
+};

@@ -10,7 +10,7 @@ exports.getAll = async () => {
       {
         model: Ticket,
         as: 'ticket',
-        attributes: ['ticket_name', 'ticket_type', 'price']
+        attributes: ['ticket_type', 'price']
       }
     ]
   });
@@ -22,7 +22,7 @@ exports.getById = async (id) => {
       {
         model: Ticket,
         as: 'ticket',
-        attributes: ['ticket_name', 'ticket_type', 'price']
+        attributes: ['ticket_type', 'price']
       }
     ]
   });

@@ -15,7 +15,7 @@ exports.getAll = async () => {
       {
         model: User,
         as: 'user',
-        attributes: ['username', 'email']
+        attributes: ['name', 'email']
       }
     ]
   });
@@ -32,7 +32,7 @@ exports.getById = async (id) => {
       {
         model: User,
         as: 'user',
-        attributes: ['username', 'email']
+        attributes: ['name', 'email']
       }
     ]
   });

@@ -1,5 +1,6 @@
 const db = require('../../config/database'); 
 const { Event, Category, Venue, Location } = require('../../models'); 
+const { Op } = require('sequelize');
 
 exports.getAll = async () => {
   return await Event.findAll({
@@ -12,7 +13,7 @@ exports.getAll = async () => {
       {
         model: Venue,
         as: 'venue',
-        attributes: ['venue_name', 'venue_city', 'html_embed'],
+        attributes: ['venue_name', 'venue_city', 'address', 'html_embed'],
         include: {
           model: Location,
           as: 'location',
@@ -62,6 +63,35 @@ exports.getByLocation = async (locationId) => {
         model: Category,
         as: 'category',
         attributes: ['category_name']
+      }
+    ]
+  });
+};
+
+exports.searchEvents = async (keyword) => {
+  return await Event.findAll({
+    where: {
+      event_name: {
+        [Op.like]: `%${keyword}%` // mencari event_name yang mengandung keyword
+      }
+    },
+    include: [
+      {
+        model: Venue,
+        as: 'venue',
+        required: false,  // false selama data venue ada yang NULL
+        include: [
+          {
+            model: Location,
+            as: 'location', 
+            required: false
+          }
+        ]
+      },
+      {
+        model: Category,
+        as: 'category',
+        attributes: ['category_name'] // menampilkan nama kategori
       }
     ]
   });

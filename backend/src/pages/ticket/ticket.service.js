@@ -1,4 +1,4 @@
-const { Ticket, Event } = require('../../models');
+const { Ticket, Event, Category } = require('../../models');
 
 // Create
 exports.create = async (data) => {
@@ -40,4 +40,25 @@ exports.delete = async (id) => {
   if (!ticket) return null;
   await ticket.destroy();
   return ticket;
+};
+
+// ---
+
+// Get Tickets by Event ID
+exports.getByEventId = async (eventId) => {
+  return await Ticket.findAll({
+    where: { event_id: eventId },
+    include: [
+      {
+        model: Event,
+        as: 'event',
+        include: [{
+            model: Category,
+            as: 'category', // kalo Event.belongsTo(Category, { foreignKey: 'category_id', as: 'category' });
+            attributes: ['category_name']
+          }],
+        attributes: ['event_name']
+      }
+    ]
+  });
 };

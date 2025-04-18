@@ -57,3 +57,19 @@ exports.deleteTicket = async (req, res) => {
     res.status(500).json({ error: 'Server error' });
   }
 };
+
+// ---
+
+// Get Tickets by Event ID
+exports.getByEventId = async (req, res) => {
+  try {
+    const tickets = await service.getByEventId(req.params.eventId);
+    if (!tickets || tickets.length === 0) {
+      return res.status(404).json({ error: 'Tickets not found for this event' });
+    }
+    res.status(200).json(tickets);
+  } catch (err) {
+    console.error('❌ Error saat getByEventId:', err);
+    res.status(500).json({ error: 'Server error' });
+  }
+};

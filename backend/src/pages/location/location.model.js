@@ -7,12 +7,20 @@ const Location = sequelize.define('Location', {
     primaryKey: true,
     autoIncrement: true
   },
-  city: {
-    type: DataTypes.STRING(100),
+  location_name: {
+    type: DataTypes.STRING(255),
     allowNull: false
   },
-  province: {
-    type: DataTypes.STRING(100),
+  created_at: {
+    type: DataTypes.DATE,
+    defaultValue: DataTypes.NOW
+  },
+  updated_at: {
+    type: DataTypes.DATE,
+    defaultValue: DataTypes.NOW
+  },
+  deleted_at: {
+    type: DataTypes.DATE,
     allowNull: true
   }
 }, {
@@ -21,3 +29,4 @@ const Location = sequelize.define('Location', {
 });
 
 module.exports = Location;
+
