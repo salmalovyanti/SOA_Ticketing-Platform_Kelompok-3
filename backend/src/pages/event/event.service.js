@@ -96,3 +96,11 @@ exports.searchEvents = async (keyword) => {
     ]
   });
 };
+
+exports.delete = async (id) => {
+  const deletedCount = await Event.destroy({
+    where: { event_id: id }
+  });
+
+  return deletedCount > 0;
+};

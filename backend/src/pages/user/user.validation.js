@@ -16,4 +16,10 @@ const updateUserSchema = Joi.object({
   role: Joi.string().valid('admin', 'buyer')
 });
 
-module.exports = { createUserSchema, updateUserSchema };
+const updateUserProfileSchema = Joi.object({
+  name: Joi.string().max(100),
+  email: Joi.string().email().max(100),
+  phone: Joi.string().max(15).allow(null, '')
+});
+
+module.exports = { createUserSchema, updateUserSchema, updateUserProfileSchema };

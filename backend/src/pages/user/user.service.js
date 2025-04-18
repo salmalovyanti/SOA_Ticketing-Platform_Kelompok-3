@@ -26,3 +26,18 @@ exports.delete = async (id) => {
   await user.destroy();
   return user;
 };
+
+exports.updateProfile = async (id, data) => {
+    const user = await User.findByPk(id);
+    if (!user) return null;
+  
+    // Hanya update field tertentu untuk profile
+    const fieldsToUpdate = {};
+    if (data.name !== undefined) fieldsToUpdate.name = data.name;
+    if (data.email !== undefined) fieldsToUpdate.email = data.email;
+    if (data.phone !== undefined) fieldsToUpdate.phone = data.phone;
+  
+    await user.update(fieldsToUpdate);
+    return user;
+  };
+  

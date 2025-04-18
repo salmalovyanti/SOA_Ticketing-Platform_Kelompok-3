@@ -68,3 +68,17 @@ exports.searchEvents = async (req, res) => {
     res.status(500).json({ error: 'Server error' });
   }
 };
+
+exports.deleteEvent = async (req, res) => {
+  try {
+    const eventId = req.params.id;
+    const deleted = await service.delete(eventId);   
+    if (!deleted) {
+      return res.status(404).json({ message: 'Event not found' });
+    }
+    res.status(200).json({ message: 'Event deleted successfully' });
+  } catch (error) {
+    console.error('❌ Error saat deleteEvent:', error);
+    res.status(500).json({ error: 'Server error' });
+  }
+};

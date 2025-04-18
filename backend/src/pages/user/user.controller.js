@@ -1,5 +1,5 @@
 const service = require('./user.service');
-const { createUserSchema, updateUserSchema } = require('./user.validation');
+const { createUserSchema, updateUserSchema, updateUserProfileSchema } = require('./user.validation');
 
 exports.createUser = async (req, res) => {
   try {
@@ -58,6 +58,21 @@ exports.deleteUser = async (req, res) => {
     res.json({ message: 'User deleted successfully' });
   } catch (err) {
     console.error('❌ Error saat deleteUser:', err);
+    res.status(500).json({ error: 'Server error' });
+  }
+};
+
+exports.updateUserProfile = async (req, res) => {
+  try {
+    const { error, value } = updateUserProfileSchema.validate(req.body);
+    if (error) return res.status(400).json({ error: error.details[0].message });
+
+    const updatedUser = await service.updateProfile(req.params.id, value);
+    if (!updatedUser) return res.status(404).json({ error: 'User not found' });
+
+    res.json(updatedUser);
+  } catch (err) {
+    console.error('❌ Error saat updateUserProfile:', err);
     res.status(500).json({ error: 'Server error' });
   }
 };
