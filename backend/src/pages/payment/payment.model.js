@@ -1,0 +1,56 @@
+const { DataTypes } = require('sequelize');
+const sequelize = require('../../config/database');
+
+const Payment = sequelize.define('Payment', {
+  payment_id: {
+    type: DataTypes.BIGINT,
+    primaryKey: true,
+    autoIncrement: true
+  },
+  order_id: {
+    type: DataTypes.BIGINT,
+    allowNull: true
+  },
+  payment_provider: {
+    type: DataTypes.STRING(50),
+    allowNull: true
+  },
+  payment_code: {
+    type: DataTypes.STRING(100),
+    allowNull: true
+  },
+  amount: {
+    type: DataTypes.DECIMAL(12, 2),
+    allowNull: true
+  },
+  status: {
+    type: DataTypes.ENUM('pending', 'paid', 'failed'),
+    allowNull: true,
+    defaultValue: 'pending'
+  },
+  paid_at: {
+    type: DataTypes.DATE,
+    allowNull: true
+  },
+  created_at: {
+    type: DataTypes.TIMESTAMP,
+    defaultValue: sequelize.literal('CURRENT_TIMESTAMP'),
+    allowNull: false
+  },
+  updated_at: {
+    type: DataTypes.TIMESTAMP,
+    defaultValue: sequelize.literal('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'),
+    allowNull: false
+  },
+  deleted_at: {
+    type: DataTypes.TIMESTAMP,
+    allowNull: true
+  }
+}, {
+  tableName: 'payments',
+  timestamps: false,  
+  paranoid: true,     // Soft delete
+  underscored: true
+});
+
+module.exports = Payment;

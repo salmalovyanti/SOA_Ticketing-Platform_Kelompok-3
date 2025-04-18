@@ -73,3 +73,26 @@ exports.getByEventId = async (req, res) => {
     res.status(500).json({ error: 'Server error' });
   }
 };
+
+const ticketService = require('./ticket.service');
+const { purchaseTicketSchema } = require('./ticket.validation');
+
+exports.purchaseTicket = async (req, res) => {
+  try {
+    // Validate request data
+    const { error, value } = purchaseTicketSchema.validate(req.body);
+    if (error) return res.status(400).json({ error: error.details[0].message });
+
+    // Call service to process ticket purchase
+    const ticketPurchase = await ticketService.purchase(value);
+
+    if (!ticketPurchase) {
+      return res.status(400).json({ error: 'Ticket purchase failed' });
+    }
+
+    res.status(201).json(ticketPurchase);
+  } catch (err) {
+    console.error('❌ Error saat purchaseTicket:', err);
+    res.status(500).json({ error: 'Server error' });
+  }
+};

@@ -1,5 +1,5 @@
 const db = require('../../config/database');
-const { Order, Event } = require('../../models');
+const { Order, Event, Ticket } = require('../../models');
 
 exports.create = async (data) => {
   return await Order.create(data);
@@ -40,4 +40,24 @@ exports.delete = async (id) => {
   if (!order) return null;
   await order.destroy();
   return order;
+};
+
+// Get tickets by user_id
+exports.getTicketsByUser = async (userId) => {
+  return await Order.findAll({
+    where: { user_id: userId, order_status: 'paid' }, // Ensure the order is paid
+    include: [
+      {
+        model: Ticket,
+        as: 'ticket', // Assuming ticket is related to order
+        include: [
+          {
+            model: Event,
+            as: 'event', // Assuming ticket is linked to event
+            attributes: ['event_name', 'event_date']
+          }
+        ]
+      }
+    ]
+  });
 };

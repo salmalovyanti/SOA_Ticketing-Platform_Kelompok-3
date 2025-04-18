@@ -1,4 +1,5 @@
-const { Ticket, Event, Category } = require('../../models');
+const db = require('../../config/database'); 
+const { Ticket, Event, Category, User } = require('../../models');
 
 // Create
 exports.create = async (data) => {
@@ -61,4 +62,37 @@ exports.getByEventId = async (eventId) => {
       }
     ]
   });
+};
+
+exports.purchase = async (data) => {
+  const { user_id, event_id, ticket_id } = data;
+
+  // Cek jika user ada
+  const user = await User.findByPk(user_id);
+  if (!user) {
+    throw new Error('User not found');
+  }
+
+  // Cek jika event ada
+  const event = await Event.findByPk(event_id);
+  if (!event) {
+    throw new Error('Event not found');
+  }
+
+  // Cek jika ticket ada
+  const ticket = await Ticket.findByPk(ticket_id);
+  if (!ticket) {
+    throw new Error('Ticket not available');
+  }
+
+  // Pembelian ticket
+  const purchasedTicket = await Ticket.create({
+    user_id,
+    event_id,
+    ticket_id,
+    status: 'purchased',
+    purchase_date: new Date(),
+  });
+
+  return purchasedTicket;
 };

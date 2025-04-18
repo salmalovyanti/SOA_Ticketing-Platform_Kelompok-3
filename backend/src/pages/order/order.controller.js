@@ -63,3 +63,15 @@ exports.deleteOrder = async (req, res) => {
     res.status(500).json({ error: 'Server error' });
   }
 };
+
+// List semua tickets yang dibeli user
+exports.getMyTickets = async (req, res) => {
+  try {
+    const userId = req.user.id; // Assuming user ID is available in req.user
+    const tickets = await service.getTicketsByUser(userId);
+    res.json(tickets);
+  } catch (err) {
+    console.error('❌ Error saat getMyTickets:', err);
+    res.status(500).json({ error: 'Server error' });
+  }
+};

@@ -16,4 +16,10 @@ const updateTicketSchema = Joi.object({
   version_number: Joi.number().integer(),
 });
 
-module.exports = { createTicketSchema, updateTicketSchema };
+const purchaseTicketSchema = Joi.object({
+  user_id: Joi.number().integer().required(),
+  event_id: Joi.number().integer().required(),
+  ticket_id: Joi.number().integer().required(),
+});
+
+module.exports = { createTicketSchema, updateTicketSchema, purchaseTicketSchema };

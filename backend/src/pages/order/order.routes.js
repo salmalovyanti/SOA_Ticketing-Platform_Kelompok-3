@@ -7,5 +7,6 @@ router.get('/', controller.getAllOrders);
 router.get('/:id', controller.getOrderById);
 router.put('/:id', controller.updateOrder);
 router.delete('/:id', controller.deleteOrder);
+router.get('/my-tickets', controller.getMyTickets);
 
 module.exports = router;
