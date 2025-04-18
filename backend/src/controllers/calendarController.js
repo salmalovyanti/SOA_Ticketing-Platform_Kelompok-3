@@ -1,4 +1,4 @@
-const { oauth2Client } = require('../config/googleAuth');
+const { oauth2Client } = require('../src/config/googleAuth');
 const { google } = require('googleapis');
 
 exports.createEvent = async (req, res) => {
