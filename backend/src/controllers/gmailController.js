@@ -1,6 +1,6 @@
 const { google } = require('googleapis');
 const { oauth2Client } = require('../config/googleAuth');
-const db = require('../config/database'); // koneksi db kamu (pastikan pakai async/await)
+const db = require('../config/db'); // koneksi db kamu (pastikan pakai async/await)
  
 exports.sendMail = async (req, res) => {
   try {
