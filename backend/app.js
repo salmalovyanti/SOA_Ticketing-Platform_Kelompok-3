@@ -29,7 +29,7 @@ const userRoutes = require('./src/pages/user/user.routes');
 const venueRoutes = require('./src/pages/venue/venue.routes');
 const waitingQueueRoutes = require('./src/pages/waiting_queue/waiting_queue.routes');
 const authRoutes = require('./src/routes/authRoutes');
-const redisRoutes = require('./routes/redisRoutes'); // API Redis
+const redisRoutes = require('./src/routes/redisRoutes'); // API Redis
 
 const app = express();
 const port = process.env.PORT || 3000;
