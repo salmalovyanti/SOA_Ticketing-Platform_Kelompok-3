@@ -22,6 +22,14 @@ const EventDetailPage = () => {
   }, [id]);
 
   const handleOrder = async () => {
+    const userId = localStorage.getItem('userId'); // Ambil user_id dari localStorage
+
+    // Cek apakah user sudah login
+    if (!userId) {
+      alert("Kamu harus login terlebih dahulu.");
+      return;
+    }
+    
     const orderData = {
       event_id: id,
       quantity: 1, // contoh kuantitas default

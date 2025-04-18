@@ -19,6 +19,7 @@ const Login = () => {
 
             localStorage.setItem('isLoggedIn', 'true');
             localStorage.setItem('userName', data.user.name); // pastikan backend kirim user
+            localStorage.setItem('userId', data.user.user_id);
 
             navigate('/');
         } catch (err) {
