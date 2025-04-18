@@ -1,5 +1,5 @@
 const { google } = require('googleapis');
-const { oauth2Client } = require('../config/googleAuth');
+const { oauth2Client } = require('../src/config/googleAuth');
 
 exports.sendMail = async (req, res) => {
   try {
