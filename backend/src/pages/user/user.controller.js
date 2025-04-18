@@ -76,3 +76,21 @@ exports.updateUserProfile = async (req, res) => {
     res.status(500).json({ error: 'Server error' });
   }
 };
+
+exports.uploadAvatar = async (req, res) => {
+  try {
+    if (!req.file) {
+      return res.status(400).json({ error: 'No file uploaded' });
+    }
+
+    const avatarUrl = `/uploads/avatars/${req.file.filename}`; // path relatif
+    const updatedUser = await service.updateAvatar(req.params.id, avatarUrl);
+
+    if (!updatedUser) return res.status(404).json({ error: 'User not found' });
+
+    res.json({ message: 'Avatar uploaded successfully', avatar_url: avatarUrl });
+  } catch (err) {
+    console.error('❌ Error saat uploadAvatar:', err);
+    res.status(500).json({ error: 'Server error' });
+  }
+};
