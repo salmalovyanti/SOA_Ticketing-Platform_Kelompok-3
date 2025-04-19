@@ -67,7 +67,15 @@ router.post('/login', loginLimiter, (req, res) => {
 
             const token = generateToken(user); // gunakan fungsi generateToken
 
-            res.status(200).send({ message: 'Login sukses', token });
+            res.status(200).send({
+                message: 'Login sukses',
+                token,
+                user: {
+                    user_id: user.user_id,
+                    name: user.name,
+                    email: user.email
+                }
+            });
         });
     });
 });

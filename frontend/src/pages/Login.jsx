@@ -18,8 +18,8 @@ const Login = () => {
             console.log("Login response:", data); // cek datanya
 
             localStorage.setItem('isLoggedIn', 'true');
-            localStorage.setItem('userName', data.user.name); // pastikan backend kirim user
             localStorage.setItem('userId', data.user.user_id);
+            localStorage.setItem('userName', data.user.name); // pastikan backend kirim user
 
             navigate('/');
         } catch (err) {
