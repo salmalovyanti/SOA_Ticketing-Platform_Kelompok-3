@@ -1,26 +1,43 @@
-# Ticketing-Platform
+# Ticketing Platform 
 
-# Application Name
+## Aplication Name
 Tikeroo
 
-# Member
-SOA - Kelompok 5:
-1. 2210511069 - Salma Nabila Lovyanti
-2. 2210511071 - Mahira Afifa Mulia
-3. 2210511093 - Dini Rahmawati
+## Team - SOA Kelompok 5
 
-# Features
-# API Sederhana (CRUD)
+| NIM         | Name                    |
+|-------------|-------------------------|
+| 2210511069  | Salma Nabila Lovyanti   |
+| 2210511071  | Mahira Afifa Mulia      |
+| 2210511093  | Dini Rahmawati          |
 
-# API Complex
+---
 
-# API NoSQL
+## Features
 
-# Oauth & JWT
+### Basic API (CRUD)
+- User Management
+- Event Management
+- Orders & Transactions
 
-# Rate Limiting & Throttling
+### Complex API
 
-# Integrasi 3rd party
 
-# Service Worker
+### API NoSQL (Redis)
+
+
+### Authentication
+- Google OAuth 2.0
+- JWT Access Token
+
+### Security
+
+
+### 3rd Party Integration
+- Gmail API — Email Confirmation & Reminder
+- Google Calendar API — Save event to user calendar
+- Google Maps API — Show event location
+
+### Service Worker
+
 
