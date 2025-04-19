@@ -1,5 +1,6 @@
 const service = require('./waiting_queue.service');
 
+// Handler untuk menambahkan data antrian
 exports.createQueue = async (req, res) => {
   try {
     const newQueue = await service.create(req.body);
@@ -9,6 +10,7 @@ exports.createQueue = async (req, res) => {
   }
 };
 
+// Handler untuk menampilkan seluruh data antrian
 exports.getAllQueues = async (req, res) => {
   try {
     const queues = await service.getAll();
@@ -19,6 +21,7 @@ exports.getAllQueues = async (req, res) => {
   }
 };
 
+// Handler untuk menampilkan satu data antrian
 exports.getQueueById = async (req, res) => {
   try {
     const queue = await service.getById(req.params.id);
@@ -30,6 +33,7 @@ exports.getQueueById = async (req, res) => {
   }
 };
 
+// Handler untuk mengedit data antrian
 exports.updateQueue = async (req, res) => {
   try {
     const updated = await service.update(req.params.id, req.body);
@@ -39,6 +43,7 @@ exports.updateQueue = async (req, res) => {
   }
 };
 
+// Handler untuk menghapus data antrian
 exports.deleteQueue = async (req, res) => {
   try {
     await service.delete(req.params.id);

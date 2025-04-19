@@ -1,6 +1,7 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../../config/database');
 
+// Definisi model Venue yang merepresentasikan tabel venues di database
 const Venue = sequelize.define('Venue', {
   venue_id: {
     type: DataTypes.BIGINT,

@@ -1,7 +1,7 @@
 const service = require('./cart.service');
 const { addToCartSchema, checkoutSchema } = require('./cart.validations');
 
-// Tambah tiket ke keranjang
+// Handler untuk menambah tiket ke keranjang
 exports.addToCart = async (req, res) => {
     try {
         // Validasi data dari request body
@@ -22,7 +22,7 @@ exports.addToCart = async (req, res) => {
     }
 };
 
-// Lihat isi keranjang user
+// Handler untuk melihat isi keranjang user
 exports.getMyCart = async (req, res) => {
     try {
         // Ambil user_id dari auth atau query parameter
@@ -45,7 +45,7 @@ exports.getMyCart = async (req, res) => {
     }
 };
 
-// Checkout isi keranjang user
+// Handler untuk checkout isi keranjang user
 exports.checkout = async (req, res) => {
     try {
         // Validasi request body

@@ -1,5 +1,6 @@
 const service = require('./location.service');
 
+// Handler untuk menampilkan seluruh data lokasi
 exports.getAllLocations = async (req, res) => {
   try {
     const locations = await service.getAll();
@@ -10,6 +11,7 @@ exports.getAllLocations = async (req, res) => {
   }
 };
 
+// Handler untuk menambahkan lokasi
 exports.createLocation = async (req, res) => {
   try {
     const newLocation = await service.create(req.body);
@@ -20,6 +22,7 @@ exports.createLocation = async (req, res) => {
   }
 };
 
+// Handler untuk menampilkan satu lokasi
 exports.getLocationById = async (req, res) => {
   try {
     const location = await service.getById(req.params.id);
@@ -33,6 +36,7 @@ exports.getLocationById = async (req, res) => {
   }
 };
 
+// Handler untuk mengedit lokasi
 exports.updateLocation = async (req, res) => {
   try {
     const updated = await service.update(req.params.id, req.body);
@@ -46,6 +50,7 @@ exports.updateLocation = async (req, res) => {
   }
 };
 
+// Handler untuk menghapus lokasi
 exports.deleteLocation = async (req, res) => {
   try {
     const deleted = await service.remove(req.params.id);

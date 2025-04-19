@@ -1,7 +1,8 @@
-// models/user.js
+// Mengimpor koneksi database dari file konfigurasi
 const db = require('../config/db');
 
 module.exports = {
+  // Fungsi untuk mencari user berdasarkan google_id
   findByGoogleId: (googleId, callback) => {
     const query = 'SELECT * FROM users WHERE google_id = ?';
     db.query(query, [googleId], (err, results) => {
@@ -10,6 +11,7 @@ module.exports = {
     });
   },
 
+  // Fungsi untuk membuat user baru dari data akun Google
   createUserFromGoogle: (profile, callback) => {
     const query = 'INSERT INTO users (name, email, google_id) VALUES (?, ?, ?)';
     const values = [profile.displayName, profile.emails[0].value, profile.id];

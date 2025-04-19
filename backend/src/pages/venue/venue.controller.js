@@ -1,5 +1,6 @@
 const service = require('./venue.service');
 
+// Handler untuk menampilkan seluruh data venue
 exports.getAllVenues = async (req, res) => {
   try {
     const venues = await service.getAll();
@@ -10,6 +11,7 @@ exports.getAllVenues = async (req, res) => {
   }
 };
 
+// Handler untuk menambahkan data venue
 exports.createVenue = async (req, res) => {
   try {
     const newVenue = await service.create(req.body);
@@ -19,6 +21,7 @@ exports.createVenue = async (req, res) => {
   }
 };
 
+// Handler untuk menampilkan satu data venue
 exports.getVenueById = async (req, res) => {
   try {
     const venue = await service.getById(req.params.id);
@@ -32,6 +35,7 @@ exports.getVenueById = async (req, res) => {
   }
 };
 
+// Handler untuk mengedit data venue
 exports.updateVenue = async (req, res) => {
   try {
     const updated = await service.update(req.params.id, req.body);
@@ -45,6 +49,7 @@ exports.updateVenue = async (req, res) => {
   }
 };
 
+// Handler untuk menghapus data venue
 exports.deleteVenue = async (req, res) => {
   try {
     const deleted = await service.delete(req.params.id);

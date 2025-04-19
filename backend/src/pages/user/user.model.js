@@ -1,6 +1,7 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../../config/database');
 
+// Definisi model User yang merepresentasikan tabel users di database
 const User = sequelize.define('User', {
   user_id: {
     type: DataTypes.BIGINT,

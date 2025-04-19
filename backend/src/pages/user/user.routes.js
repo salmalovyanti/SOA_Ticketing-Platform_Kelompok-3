@@ -17,19 +17,19 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
-// Fitur mengupload foto profil user
+// Endpoint untuk mengupload foto profil user
 router.post('/:id/avatar', upload.single('avatar'), controller.uploadAvatar);
-// fitur menambahkan user
+// Endpoint untuk menambahkan user
 router.post('/', controller.createUser);
-// Fitur menampilkan seluruh data user
+// Endpoint untuk menampilkan seluruh data user
 router.get('/', controller.getAllUsers);
-// Fitur menampilkan satu data user
+// Endpoint untuk menampilkan satu data user
 router.get('/:id', controller.getUserById);
-// Fitung mengedit data user
+// Endpoint untuk mengedit data user
 router.put('/:id', controller.updateUser);
-// Fitur menghapus data user
+// Endpoint untuk menghapus data user
 router.delete('/:id', controller.deleteUser);
-// Fitur mengedit data profil user (hanya untuk data yang dapat dilihat user)
+// Endpoint untuk mengedit data profil user (hanya untuk data yang dapat dilihat user)
 router.put('/:id/profile', controller.updateUserProfile);
 
 module.exports = router;

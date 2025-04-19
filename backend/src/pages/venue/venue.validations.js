@@ -1,5 +1,6 @@
 const Joi = require('joi');
 
+// Skema validasi untuk menambahkan data venue
 const createVenueSchema = Joi.object({
   location_id: Joi.number().required(),
   venue_name: Joi.string().required(),
@@ -8,6 +9,7 @@ const createVenueSchema = Joi.object({
   html_embed: Joi.string().allow('', null)
 });
 
+// Skema validasi untuk mengedit data venue
 const updateVenueSchema = Joi.object({
   location_id: Joi.number().optional(),
   venue_name: Joi.string().optional(),

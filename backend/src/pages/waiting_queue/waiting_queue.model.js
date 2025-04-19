@@ -1,6 +1,7 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../../config/database');
 
+// Definisi model WaitingQueue yang merepresentasikan tabel waiting_queues di database
 const WaitingQueue = sequelize.define('WaitingQueue', {
   queue_id: {
     type: DataTypes.BIGINT,

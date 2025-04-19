@@ -1,6 +1,7 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../../config/database');
 
+// Definisi model Ticket yang merepresentasikan tabel tickets di database
 const Ticket = sequelize.define('Ticket', {
   ticket_id: {
     type: DataTypes.BIGINT,

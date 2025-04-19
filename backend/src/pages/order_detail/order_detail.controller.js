@@ -1,5 +1,6 @@
 const service = require('./order_detail.service');
 
+// Handler untuk membuat order detail
 exports.createOrderDetail = async (req, res) => {
   try {
     const result = await service.create(req.body);
@@ -9,6 +10,7 @@ exports.createOrderDetail = async (req, res) => {
   }
 };
 
+// Handler untuk menampilkan seluruh data order detail
 exports.getAllOrderDetails = async (req, res) => {
   try {
     const result = await service.getAll();
@@ -18,6 +20,7 @@ exports.getAllOrderDetails = async (req, res) => {
   }
 };
 
+// Handler untuk menampilkan satu data order detail
 exports.getOrderDetailById = async (req, res) => {
   try {
     const result = await service.getById(req.params.id);
@@ -28,6 +31,7 @@ exports.getOrderDetailById = async (req, res) => {
   }
 };
 
+// Handler untuk mengedit data order detail
 exports.updateOrderDetail = async (req, res) => {
   try {
     const result = await service.update(req.params.id, req.body);
@@ -37,6 +41,7 @@ exports.updateOrderDetail = async (req, res) => {
   }
 };
 
+// Handler untuk menghapus data order detail
 exports.deleteOrderDetail = async (req, res) => {
   try {
     await service.delete(req.params.id);

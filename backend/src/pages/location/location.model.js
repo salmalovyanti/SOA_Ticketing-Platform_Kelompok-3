@@ -1,6 +1,7 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../../config/database');
 
+// Definisi model Location yang merepresentasikan tabel locations di database
 const Location = sequelize.define('Location', {
   location_id: {
     type: DataTypes.BIGINT,

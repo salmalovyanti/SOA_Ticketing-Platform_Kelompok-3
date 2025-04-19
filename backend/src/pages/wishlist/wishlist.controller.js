@@ -1,7 +1,7 @@
 const service = require('./wishlist.service');
 const { addToWishlistSchema } = require('./wishlist.validations');
 
-// POST /api/wishlist : Tambah event ke wishlist
+// Handler untuk menambahkan event ke wishlist
 exports.addToWishlist = async (req, res) => {
     try {
         const { error, value } = addToWishlistSchema.validate(req.body);
@@ -20,7 +20,7 @@ exports.addToWishlist = async (req, res) => {
     }
 };
 
-// GET /api/wishlist : Lihat daftar wishlist user
+// Handler untuk menampilkan daftar wishlist 
 exports.getMyWishlist = async (req, res) => {
     try {
         const userId = req.user?.id || req.query.user_id; // Ambil dari auth atau query param

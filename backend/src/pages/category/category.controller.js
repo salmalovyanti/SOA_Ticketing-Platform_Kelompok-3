@@ -1,5 +1,6 @@
 const service = require('./category.service');
 
+// Handler untuk menampilkan keseluruhan kategori event
 exports.getAllCategories = async (req, res) => {
   try {
     const categories = await service.getAll();
@@ -10,6 +11,7 @@ exports.getAllCategories = async (req, res) => {
   }
 };
 
+// Handler untuk menambahkan kategori event
 exports.createCategory = async (req, res) => {
   try {
     const newCategory = await service.create(req.body);
@@ -19,6 +21,7 @@ exports.createCategory = async (req, res) => {
   }
 };
 
+// Handler untuk melihat satu kategori event
 exports.getCategoryById = async (req, res) => {
   try {
     const category = await service.getById(req.params.id);
@@ -32,6 +35,7 @@ exports.getCategoryById = async (req, res) => {
   }
 };
 
+// Handler untuk mengedit kategori event
 exports.updateCategory = async (req, res) => {
   try {
     const updated = await service.update(req.params.id, req.body);
@@ -44,6 +48,7 @@ exports.updateCategory = async (req, res) => {
   }
 };
 
+// Handler untuk menghapus satu kategori event
 exports.deleteCategory = async (req, res) => {
   try {
     const deleted = await service.remove(req.params.id);

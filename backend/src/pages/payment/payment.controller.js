@@ -1,6 +1,6 @@
 const paymentService = require('./payment.service');
 
-// Cancel Ticket
+// Handler untuk membatalkan pembelian tiket
 exports.cancelTicket = async (req, res) => {
   try {
     const { user_id, payment_id } = req.body;

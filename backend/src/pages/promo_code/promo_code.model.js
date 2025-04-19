@@ -1,6 +1,7 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../../config/database');
 
+// Definisi model PromoCode yang merepresentasikan tabel promo_codes di database
 const PromoCode = sequelize.define('PromoCode', {
   promo_codes_id: {
     type: DataTypes.BIGINT,

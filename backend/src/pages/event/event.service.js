@@ -41,8 +41,8 @@ exports.getByCategory = async (categoryId) => {
     where: { category_id: categoryId },
     include: [{
       model: Category,
-      as: 'category', 
-      attributes: ['category_name'] 
+      as: 'category', // ini penting!
+      attributes: ['category_name'] // opsional, tapi biasanya dipakai
     }]
   });
 };

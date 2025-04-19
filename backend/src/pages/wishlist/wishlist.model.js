@@ -1,6 +1,7 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../../config/database');
 
+// Definisi model Wishlist yang merepresentasikan tabel wishlist di database
 const Wishlist = sequelize.define('Wishlist', {
   wishlist_id: {
     type: DataTypes.BIGINT,

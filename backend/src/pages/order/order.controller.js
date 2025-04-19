@@ -1,7 +1,7 @@
 const service = require('./order.service');
 const { refundOrderSchema } = require('./order.validations');
 
-// Create Order
+// Handler untuk membuat order
 exports.createOrder = async (req, res) => {
   try {
     const newOrder = await service.create(req.body);
@@ -12,7 +12,7 @@ exports.createOrder = async (req, res) => {
   }
 };
 
-// Get All Orders (with Event data)
+// Handler untuk menampilkan seluruh data order
 exports.getAllOrders = async (req, res) => {
   try {
     const orders = await service.getAll();
@@ -23,7 +23,7 @@ exports.getAllOrders = async (req, res) => {
   }
 };
 
-// Get Order by ID
+// Handler untuk menampilkan satu data order
 exports.getOrderById = async (req, res) => {
   try {
     const order = await service.getById(req.params.id);
@@ -37,7 +37,7 @@ exports.getOrderById = async (req, res) => {
   }
 };
 
-// Update Order
+// Handler untuk mengedit data order
 exports.updateOrder = async (req, res) => {
   try {
     const updatedOrder = await service.update(req.params.id, req.body);
@@ -51,7 +51,7 @@ exports.updateOrder = async (req, res) => {
   }
 };
 
-// Delete Order
+// Handler untuk menghapus data order
 exports.deleteOrder = async (req, res) => {
   try {
     const deletedOrder = await service.delete(req.params.id);
@@ -65,10 +65,10 @@ exports.deleteOrder = async (req, res) => {
   }
 };
 
-// List semua tickets yang dibeli user
+// Handler untuk menampilkan seluruh tiket yang dibeli user
 exports.getMyTickets = async (req, res) => {
   try {
-    const userId = req.user.id; // Assuming user ID is available in req.user
+    const userId = req.user.id;
     const tickets = await service.getTicketsByUser(userId);
     res.json(tickets);
   } catch (err) {
@@ -77,7 +77,7 @@ exports.getMyTickets = async (req, res) => {
   }
 };
 
-// Request Refund
+// Handler untuk mengajukan refund tiket
 exports.requestRefund = async (req, res) => {
   try {
     const { error, value } = refundOrderSchema.validate(req.body);

@@ -3,19 +3,19 @@ const router = express.Router();
 const controller = require('./ticket.controller');
 const { validateBulkUploadTickets } = require('./ticket.validations');
 
-// Fitur menambahkan jenis tiket ke event
+// Endpoint untuk menambahkan jenis tiket ke event
 router.post('/', controller.createTicket);
-// Fitur menampilkan seluruh data tiket
+// Endpoint untuk menampilkan seluruh data tiket
 router.get('/', controller.getAllTickets);
-// Fitur menapilkan satu data tiket
+// Endpoint untuk menapilkan satu data tiket
 router.get('/:id', controller.getTicketById);
-// Fitur mengedit data tiket
+// Endpoint untuk mengedit data tiket
 router.put('/:id', controller.updateTicket);
-// Fitur menghapus data tiket
+// Endpoint untuk menghapus data tiket
 router.delete('/:id', controller.deleteTicket);
-// Fitur membeli tiket
+// Endpoint untuk membeli tiket
 router.post('/purchase-ticket', controller.purchaseTicket);
-// fitur mengupload tiket dalam jumlah yang banyak
+// Endpoint untuk mengupload tiket dalam jumlah yang banyak
 router.post('/bulk-upload', validateBulkUploadTickets, controller.bulkUploadTickets);
 
 module.exports = router;

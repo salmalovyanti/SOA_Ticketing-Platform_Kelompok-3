@@ -1,10 +1,11 @@
 const Joi = require('joi');
 
+// Skema validasi untuk menambahkan kategori event
 const createCategorySchema = Joi.object({
   category_name: Joi.string().required()
 });
 
-// Dipisah agar tidak perlu required di semua field
+// Skema validasi untuk mengedit kategori event
 const updateCategorySchema = Joi.object({
   category_name: Joi.string().optional()
 });

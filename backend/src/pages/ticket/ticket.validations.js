@@ -1,7 +1,7 @@
 const Joi = require('joi');
 const { body, validationResult } = require('express-validator');
 
-// Joi Validations (controller dengan skema)
+// Skema validasi untuk menambahkan jenis tiket ke event
 const createTicketSchema = Joi.object({
   event_id: Joi.number().integer().required(),
   ticket_type: Joi.string().valid('regular', 'vip', 'vvip').required(),
@@ -10,6 +10,7 @@ const createTicketSchema = Joi.object({
   version_number: Joi.number().integer().optional(),
 });
 
+// Skema validasi untuk mengedit data tiket
 const updateTicketSchema = Joi.object({
   event_id: Joi.number().integer(),
   ticket_type: Joi.string().valid('regular', 'vip', 'vvip'),
@@ -18,13 +19,14 @@ const updateTicketSchema = Joi.object({
   version_number: Joi.number().integer(),
 });
 
+// Skema validasi untuk membeli tiket
 const purchaseTicketSchema = Joi.object({
   user_id: Joi.number().integer().required(),
   event_id: Joi.number().integer().required(),
   ticket_id: Joi.number().integer().required(),
 });
 
-// express-validator ( validasi array dari req.body seperti bulk upload )
+// Skema validasi untuk mengupload tiket dalam jumlah yang banyak
 const validateBulkUploadTickets = [
   body('event_id')
     .notEmpty().withMessage('event_id wajib diisi')

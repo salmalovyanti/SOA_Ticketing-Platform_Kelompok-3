@@ -1,6 +1,7 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../../config/database');
 
+// Definisi model Cart yang merepresentasikan tabel carts di database
 const Cart = sequelize.define('Cart', {
   cart_id: {
     type: DataTypes.BIGINT,

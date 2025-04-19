@@ -2,6 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const preferencesPath = path.join(__dirname, 'preferenceStore.json');
 
+// Mengedit preferensi notifikasi user
 exports.updateUserPreference = async (userId, preferenceData) => {
   let preferences = {};
 

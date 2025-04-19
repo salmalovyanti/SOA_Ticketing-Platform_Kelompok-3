@@ -2,15 +2,15 @@ const express = require('express');
 const router = express.Router();
 const controller = require('./location.controller');
 
-// Fitur menampilkan seluruh data lokasi
+// Endpoint untuk menampilkan seluruh data lokasi
 router.get('/', controller.getAllLocations);
-// Fitur menambahkan lokasi
+// Endpoint untuk menambahkan lokasi
 router.post('/', controller.createLocation);
-// Fitur menampilkan satu lokasi
+// Endpoint untuk menampilkan satu lokasi
 router.get('/:id', controller.getLocationById);
-// Fitur mengedit lokasi
+// Endpoint untuk mengedit lokasi
 router.put('/:id', controller.updateLocation);
-// Fitur menghapus lokasi
+// Endpoint untuk menghapus lokasi
 router.delete('/:id', controller.deleteLocation);
 
 module.exports = router;

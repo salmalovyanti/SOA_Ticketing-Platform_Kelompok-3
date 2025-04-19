@@ -1,5 +1,6 @@
 const { Venue, Location } = require('../../models');
 
+// Menampilkan seluruh data venue
 exports.getAll = async () => {
   return await Venue.findAll({
     include: {
@@ -10,10 +11,12 @@ exports.getAll = async () => {
   });
 };
 
+// Menambahkan data venue
 exports.create = async (data) => {
   return await Venue.create(data);
 };
 
+// Menampilkan satu data venue
 exports.getById = async (id) => {
   return await Venue.findByPk(id, {
     include: {
@@ -24,11 +27,13 @@ exports.getById = async (id) => {
   });
 };
 
+// Mengedit data venue
 exports.update = async (id, data) => {
   const [updated] = await Venue.update(data, { where: { venue_id: id } });
   return updated > 0;
 };
 
+// Menghapus data venue
 exports.delete = async (id) => {
   const deleted = await Venue.destroy({ where: { venue_id: id } });
   return deleted > 0;

@@ -1,5 +1,6 @@
 const Joi = require('joi');
 
+// Skema validasi untuk menambahkan kode promo
  const promoCodeSchema = Joi.object({
   code: Joi.string().max(50).required(),
   discount_percentage: Joi.number().integer().min(1).max(100).required(),
@@ -9,10 +10,11 @@ const Joi = require('joi');
   quota: Joi.number().integer().min(1).required()
 });
 
+// Skema validasi untuk menggunakan kode promo saat melakukan pembelian
 const redeemPromoSchema = Joi.object({
-    promo_code: Joi.string().max(50).required(), // Kode promo yang digunakan
-    order_id: Joi.number().integer().required(), // ID order yang mau ditebus promo-nya
-    user_id: Joi.number().integer().required(), // ID user yang menggunakan promo
+    promo_code: Joi.string().max(50).required(),
+    order_id: Joi.number().integer().required(),
+    user_id: Joi.number().integer().required(),
   });
 
 module.exports = { promoCodeSchema, redeemPromoSchema };

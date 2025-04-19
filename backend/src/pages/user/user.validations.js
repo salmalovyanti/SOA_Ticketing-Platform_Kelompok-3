@@ -1,5 +1,6 @@
 const Joi = require('joi');
 
+// Skema validasi untuk menambahkan user
 const createUserSchema = Joi.object({
   name: Joi.string().max(100).required(),
   email: Joi.string().email().max(100).required(),
@@ -8,6 +9,7 @@ const createUserSchema = Joi.object({
   role: Joi.string().valid('admin', 'buyer').default('buyer')
 });
 
+// Skema validasi untuk mengedit data user
 const updateUserSchema = Joi.object({
   name: Joi.string().max(100),
   email: Joi.string().email().max(100),
@@ -16,6 +18,7 @@ const updateUserSchema = Joi.object({
   role: Joi.string().valid('admin', 'buyer')
 });
 
+// Skema validasi untuk mengedit data profil user (hanya untuk data yang dapat dilihat user)
 const updateUserProfileSchema = Joi.object({
   name: Joi.string().max(100),
   email: Joi.string().email().max(100),

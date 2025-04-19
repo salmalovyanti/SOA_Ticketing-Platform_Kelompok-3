@@ -1,7 +1,7 @@
 const service = require('./ticket.service');
-const {   createTicketSchema, updateTicketSchema, purchaseTicketSchema } = require('./ticket.validations');
+const { purchaseTicketSchema } = require('./ticket.validations');
 
-// Create Ticket
+// Handler untuk
 exports.createTicket = async (req, res) => {
   try {
     const ticket = await service.create(req.body);
@@ -12,7 +12,7 @@ exports.createTicket = async (req, res) => {
   }
 };
 
-// Get All Tickets
+// Handler untuk menampilkan seluruh data tiket
 exports.getAllTickets = async (req, res) => {
   try {
     const tickets = await service.getAll();
@@ -23,7 +23,7 @@ exports.getAllTickets = async (req, res) => {
   }
 };
 
-// Get Ticket by ID
+// Handler untuk menapilkan satu data tiket
 exports.getTicketById = async (req, res) => {
   try {
     const ticket = await service.getById(req.params.id);
@@ -35,7 +35,7 @@ exports.getTicketById = async (req, res) => {
   }
 };
 
-// Update Ticket
+// Handler untuk mengedit data tiket
 exports.updateTicket = async (req, res) => {
   try {
     const ticket = await service.update(req.params.id, req.body);
@@ -47,7 +47,7 @@ exports.updateTicket = async (req, res) => {
   }
 };
 
-// Delete Ticket
+// Handler untuk menghapus data tiket
 exports.deleteTicket = async (req, res) => {
   try {
     const deleted = await service.delete(req.params.id);
@@ -59,9 +59,7 @@ exports.deleteTicket = async (req, res) => {
   }
 };
 
-// ---
-
-// Get Tickets by Event ID
+// Handler untuk melihat tiket berdasarkan satu event
 exports.getByEventId = async (req, res) => {
   try {
     const tickets = await service.getByEventId(req.params.eventId);
@@ -75,6 +73,7 @@ exports.getByEventId = async (req, res) => {
   }
 };
 
+// Handler untuk membeli tiket
 exports.purchaseTicket = async (req, res) => {
   try {
     // Validate request data
@@ -95,6 +94,7 @@ exports.purchaseTicket = async (req, res) => {
   }
 };
 
+// Handler untuk mengupload tiket dalam jumlah yang banyak
 exports.bulkUploadTickets = async (req, res) => {
   try {
     const { event_id, tickets } = req.body;

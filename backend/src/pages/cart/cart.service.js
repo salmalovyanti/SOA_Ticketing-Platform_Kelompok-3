@@ -1,6 +1,6 @@
 const { Cart, Ticket, Event } = require('../../models');
 
-// Ambil isi keranjang user
+// Mengambil data isi keranjang user
 exports.getCartByUser = async (user_id) => {
   return await Cart.findAll({
     where: { user_id },
@@ -22,7 +22,7 @@ exports.getCartByUser = async (user_id) => {
   });
 };
 
-// Tambah tiket ke keranjang
+// Menambahkan tiket ke dalam keranjang user
 exports.addToCart = async (data) => {
   return await Cart.create({
     user_id: data.user_id,
@@ -31,7 +31,7 @@ exports.addToCart = async (data) => {
   });
 };
 
-// Checkout isi keranjang
+// Memproses checkout dari keranjang user dan membuat pesanan baru
 exports.checkout = async (userId, { payment_method }) => {
     const t = await db.transaction(); // Mulai transaksi untuk menjaga konsistensi data
 

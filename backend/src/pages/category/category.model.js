@@ -2,6 +2,7 @@ const { DataTypes } = require('sequelize');
 const sequelize = require('../../config/database');
 const Event = require('../event/event.model');
 
+// Definisi model Category yang merepresentasikan tabel categories di database
 const Category = sequelize.define('Category', {
   category_id: {
     type: DataTypes.BIGINT,

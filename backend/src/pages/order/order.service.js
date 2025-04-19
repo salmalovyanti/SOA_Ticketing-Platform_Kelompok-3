@@ -1,10 +1,12 @@
 const db = require('../../config/database');
 const { Order, Event, Ticket } = require('../../models');
 
+// Membuat entri pesanan baru di database
 exports.create = async (data) => {
   return await Order.create(data);
 };
 
+// Mengambil semua data pesanan beserta detail event
 exports.getAll = async () => {
   return await Order.findAll({
     include: [
@@ -17,6 +19,7 @@ exports.getAll = async () => {
   });
 };
 
+// Mengambil detail pesanan berdasarkan ID beserta informasi event
 exports.getById = async (id) => {
   return await Order.findByPk(id, {
     include: [
@@ -29,12 +32,14 @@ exports.getById = async (id) => {
   });
 };
 
+// Memperbarui data pesanan berdasarkan ID
 exports.update = async (id, data) => {
   const order = await Order.findByPk(id);
   if (!order) return null;
   return await order.update(data);
 };
 
+// Menghapus data pesanan berdasarkan ID
 exports.delete = async (id) => {
   const order = await Order.findByPk(id);
   if (!order) return null;
@@ -42,18 +47,18 @@ exports.delete = async (id) => {
   return order;
 };
 
-// Get tickets by user_id
+// Mengambil daftar tiket berdasarkan user_id untuk pesanan yang sudah dibayar
 exports.getTicketsByUser = async (userId) => {
   return await Order.findAll({
-    where: { user_id: userId, order_status: 'paid' }, // Ensure the order is paid
+    where: { user_id: userId, order_status: 'paid' }, // Pastikan status pesanan adalah 'paid'
     include: [
       {
         model: Ticket,
-        as: 'ticket', // Assuming ticket is related to order
+        as: 'ticket', // Asumsi relasi antara order dan ticket
         include: [
           {
             model: Event,
-            as: 'event', // Assuming ticket is linked to event
+            as: 'event', // Asumsi relasi antara ticket dan event
             attributes: ['event_name', 'event_date']
           }
         ]
@@ -62,7 +67,7 @@ exports.getTicketsByUser = async (userId) => {
   });
 };
 
-// Request Refund
+// Mengajukan permintaan refund untuk pesanan yang sudah dibayar
 exports.requestRefund = async ({ order_id }) => {
   const order = await Order.findOne({ where: { id: order_id } });
 
@@ -73,4 +78,4 @@ exports.requestRefund = async ({ order_id }) => {
   await order.save();
 
   return order;
-}; 
+};

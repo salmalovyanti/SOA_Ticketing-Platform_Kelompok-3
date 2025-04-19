@@ -1,6 +1,7 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../../config/database');
 
+// Definisi model Order yang merepresentasikan tabel orders di database
 const Order = sequelize.define('Order', {
   order_id: {
     type: DataTypes.BIGINT,

@@ -1,6 +1,7 @@
 const service = require('./user.service');
 const { createUserSchema, updateUserSchema, updateUserProfileSchema } = require('./user.validations');
 
+// Handler untuk menambahkan user
 exports.createUser = async (req, res) => {
   try {
     const { error, value } = createUserSchema.validate(req.body);
@@ -14,6 +15,7 @@ exports.createUser = async (req, res) => {
   }
 };
 
+// Handler untuk menampilkan seluruh data user
 exports.getAllUsers = async (req, res) => {
   try {
     const users = await service.getAll();
@@ -24,6 +26,7 @@ exports.getAllUsers = async (req, res) => {
   }
 };
 
+// Handler untuk menampilkan satu data user
 exports.getUserById = async (req, res) => {
   try {
     const user = await service.getById(req.params.id);
@@ -35,6 +38,7 @@ exports.getUserById = async (req, res) => {
   }
 };
 
+// Handler untuk mengedit data user
 exports.updateUser = async (req, res) => {
   try {
     const { error, value } = updateUserSchema.validate(req.body);
@@ -50,6 +54,7 @@ exports.updateUser = async (req, res) => {
   }
 };
 
+// Handler untuk menghapus data user
 exports.deleteUser = async (req, res) => {
   try {
     const deletedUser = await service.delete(req.params.id);
@@ -62,6 +67,7 @@ exports.deleteUser = async (req, res) => {
   }
 };
 
+// Handler untuk mengedit data profil user (hanya untuk data yang dapat dilihat user)
 exports.updateUserProfile = async (req, res) => {
   try {
     const { error, value } = updateUserProfileSchema.validate(req.body);
@@ -77,6 +83,7 @@ exports.updateUserProfile = async (req, res) => {
   }
 };
 
+// Handler untuk mengupload foto profil user
 exports.uploadAvatar = async (req, res) => {
   try {
     if (!req.file) {

@@ -1,5 +1,6 @@
 const Joi = require('joi');
 
+// Skema validasi untuk membuat order detail
 const createOrderDetailSchema = Joi.object({
   order_id: Joi.number().required(),
   ticket_id: Joi.number().required(),

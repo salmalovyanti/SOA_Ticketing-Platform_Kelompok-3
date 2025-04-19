@@ -2,15 +2,15 @@ const express = require('express');
 const router = express.Router();
 const controller = require('./category.controller');
 
-// Fitur menampilkan keseluruhan kategori event
-router.get('/', controller.getAllCategories); //
-// Fitur menambahkan kategori event
+// Endpoint untuk menampilkan keseluruhan kategori event
+router.get('/', controller.getAllCategories);
+// Endpoint untuk menambahkan kategori event
 router.post('/', controller.createCategory);
-// Fitur melihat satu kategori event
+// Endpoint untuk melihat satu kategori event
 router.get('/:id', controller.getCategoryById);
-// Fitur mengedit kategori event
+// Endpoint untuk mengedit kategori event
 router.put('/:id', controller.updateCategory);
-// Fitur menghapus satu kategori event
+// Endpoint untuk menghapus satu kategori event
 router.delete('/:id', controller.deleteCategory);
 
 module.exports = router;

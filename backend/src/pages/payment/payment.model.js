@@ -1,6 +1,7 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../../config/database');
 
+// Definisi model Payment yang merepresentasikan tabel payments di database
 const Payment = sequelize.define('Payment', {
   payment_id: {
     type: DataTypes.BIGINT,

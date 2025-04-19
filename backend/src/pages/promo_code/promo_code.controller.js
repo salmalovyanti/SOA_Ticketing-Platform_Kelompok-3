@@ -1,7 +1,7 @@
 const service = require('./promo_code.service');
 const { promoCodeSchema, redeemPromoSchema } = require('./promo_code.validations');
 
-// Create Promo Code
+// Handler untuk menambahkan kode promo
 exports.createPromoCode = async (req, res) => {
     try {
         const { error, value } = promoCodeSchema.validate(req.body);
@@ -17,7 +17,7 @@ exports.createPromoCode = async (req, res) => {
     }
 };
 
-// Redeem Promo
+// Handler untuk menggunakan kode promo saat melakukan pembelian
 exports.redeemPromo = async (req, res) => {
     try {
         // Validasi request body

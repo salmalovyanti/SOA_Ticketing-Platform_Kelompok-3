@@ -1,6 +1,7 @@
 const db = require('../../config/database');
 const { Wishlist, Event } = require('../../models');
 
+// Menambahkan event ke wishlist
 exports.addEventToWishlist = async (data) => {
     // Validasi apakah event sudah ada di wishlist
     const existingWishlistItem = await Wishlist.findOne({
@@ -16,6 +17,7 @@ exports.addEventToWishlist = async (data) => {
     return newWishlistItem;
 };
 
+// Menampilkan daftar wishlist 
 exports.getWishlistByUser = async (userId) => {
     return await Wishlist.findAll({
         where: { user_id: userId },

@@ -1,126 +1,130 @@
 const db = require('../../config/database'); 
 const { Ticket, Event, Category, User } = require('../../models');
 
-// Create
+// Membuat tiket baru
 exports.create = async (data) => {
   return await Ticket.create(data);
 };
 
-// Get All
+// Mengambil semua tiket
 exports.getAll = async () => {
   return await Ticket.findAll({
     include: {
       model: Event,
       as: 'event',
-      attributes: ['event_name']
+      attributes: ['event_name'] // Menampilkan nama event terkait
     }
   });
 };
 
-// Get by ID
+// Mengambil tiket berdasarkan ID
 exports.getById = async (id) => {
   return await Ticket.findByPk(id, {
     include: {
       model: Event,
       as: 'event',
-      attributes: ['event_name']
+      attributes: ['event_name'] // Menampilkan nama event terkait
     }
   });
 };
 
-// Update
+// Memperbarui tiket berdasarkan ID
 exports.update = async (id, data) => {
   const ticket = await Ticket.findByPk(id);
   if (!ticket) return null;
-  return await ticket.update(data);
+  return await ticket.update(data); // Mengupdate data tiket
 };
 
-// Delete
+// Menghapus tiket berdasarkan ID
 exports.delete = async (id) => {
   const ticket = await Ticket.findByPk(id);
   if (!ticket) return null;
-  await ticket.destroy();
+  await ticket.destroy(); // Menghapus tiket dari database
   return ticket;
 };
 
-// ---
-
-// Get Tickets by Event ID
+// Mengambil tiket berdasarkan ID event
 exports.getByEventId = async (eventId) => {
   return await Ticket.findAll({
-    where: { event_id: eventId },
+    where: { event_id: eventId }, // Mencari tiket berdasarkan ID event
     include: [
       {
         model: Event,
         as: 'event',
         include: [{
             model: Category,
-            as: 'category', // kalo Event.belongsTo(Category, { foreignKey: 'category_id', as: 'category' });
-            attributes: ['category_name']
+            as: 'category', // Kategori event (relasi dengan Event)
+            attributes: ['category_name'] // Menampilkan nama kategori
           }],
-        attributes: ['event_name']
+        attributes: ['event_name'] // Menampilkan nama event terkait
       }
     ]
   });
 };
 
+// Proses pembelian tiket
 exports.purchase = async (data) => {
   const { user_id, event_id, ticket_id } = data;
 
-  // Cek jika user ada
+  // Cek apakah user ada
   const user = await User.findByPk(user_id);
   if (!user) {
-    throw new Error('User not found');
+    throw new Error('User tidak ditemukan');
   }
 
-  // Cek jika event ada
+  // Cek apakah event ada
   const event = await Event.findByPk(event_id);
   if (!event) {
-    throw new Error('Event not found');
+    throw new Error('Event tidak ditemukan');
   }
 
-  // Cek jika ticket ada
+  // Cek apakah tiket ada
   const ticket = await Ticket.findByPk(ticket_id);
   if (!ticket) {
-    throw new Error('Ticket not available');
+    throw new Error('Tiket tidak tersedia');
   }
 
-  // Pembelian ticket
+  // Pembelian tiket berhasil
   const purchasedTicket = await Ticket.create({
     user_id,
     event_id,
     ticket_id,
-    status: 'purchased',
-    purchase_date: new Date(),
+    status: 'purchased', // Menandakan bahwa tiket telah dibeli
+    purchase_date: new Date(), // Tanggal pembelian tiket
   });
 
   return purchasedTicket;
 };
 
+// Proses pembelian tiket dengan pengecekan stok
 exports.purchase = async (data) => {
   const { user_id, event_id, ticket_id } = data;
 
+  // Cek apakah user ada
   const user = await User.findByPk(user_id);
-  if (!user) throw new Error('User not found');
+  if (!user) throw new Error('User tidak ditemukan');
 
+  // Cek apakah event ada
   const event = await Event.findByPk(event_id);
-  if (!event) throw new Error('Event not found');
+  if (!event) throw new Error('Event tidak ditemukan');
 
+  // Cek apakah tiket ada
   const ticket = await Ticket.findByPk(ticket_id);
-  if (!ticket) throw new Error('Ticket not found');
+  if (!ticket) throw new Error('Tiket tidak ditemukan');
 
+  // Cek apakah stok tiket masih ada
   if (ticket.stock <= 0) {
-    throw new Error('Ticket sold out');
+    throw new Error('Tiket habis');
   }
 
-  // Kurangi stok dan tambah sold
+  // Kurangi stok dan tambah jumlah tiket terjual
   ticket.stock -= 1;
   ticket.sold += 1;
   await ticket.save();
 
   return {
-    message: 'Ticket purchased successfully',
-    ticket_id: ticket.ticket_id,
-    remaining_stock: ticket.stock
+    message: 'Tiket berhasil dibeli',
+    ticket_id: ticket.ticket_id, // ID tiket yang dibeli
+    remaining_stock: ticket.stock // Sisa stok tiket yang tersedia
   };
 };

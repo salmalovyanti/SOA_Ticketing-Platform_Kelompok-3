@@ -1,5 +1,6 @@
 const notificationPreferenceService = require('./notification_preference.service');
 
+// Handler untuk mengedit preferensi notifikasi user
 exports.updatePreference = async (req, res) => {
   try {
     const userId = req.user.user_id;
