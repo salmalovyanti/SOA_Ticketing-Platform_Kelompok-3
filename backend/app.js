@@ -25,6 +25,7 @@ const cartRoutes = require('./src/pages/cart/cart.routes');
 const categoryRoutes = require('./src/pages/category/category.routes');
 const eventRoutes = require('./src/pages/event/event.routes');
 const locationRoutes = require('./src/pages/location/location.routes');
+const notificationPreferenceRoutes = require('./src/pages/user/notification_preference/notification_preference.routes');
 const orderRoutes = require('./src/pages/order/order.routes');
 const orderDetailRoutes = require('./src/pages/order_detail/order_detail.routes');
 const paymentRoutes = require('./src/pages/payment/payment.routes');
@@ -37,7 +38,6 @@ const wishlistRoutes = require('./src/pages/wishlist/wishlist.routes');
 const authRoutes = require('./src/routes/authRoutes');
 const redisRoutes = require('./src/routes/redisRoutes'); // API Redis
 const googleRoutes = require('./src/routes/googleRoutes');
-
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -80,6 +80,7 @@ app.use('/api/cart', cartRoutes);
 app.use('/api/category', categoryRoutes);
 app.use('/api/event', eventRoutes);
 app.use('/api/location', locationRoutes);
+app.use('/api/notification_preference', notificationPreferenceRoutes);
 app.use('/api/order', orderRoutes);
 app.use('/api/order_detail', orderDetailRoutes);
 app.use('/api/payment', paymentRoutes);
