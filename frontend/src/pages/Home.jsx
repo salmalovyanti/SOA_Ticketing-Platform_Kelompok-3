@@ -2,11 +2,13 @@ import React, { useEffect, useState } from 'react';
 import Navbar from '../components/Navbar';
 import EventCard from '../components/EventCard';
 import api from '../api/axios';
-import '../styles/home.css'; // Asumsikan kamu punya ini
+import '../styles/home.css';
 
+// Komponen utama untuk halaman Home
 const Home = () => {
     const [events, setEvents] = useState([]);
 
+    // Ambil data event dari backend
     useEffect(() => {
         const fetchEvents = async () => {
             try {
@@ -20,6 +22,7 @@ const Home = () => {
         fetchEvents();
     }, []);
 
+    // Struktur tampilan Home
     return (
         <div>
             <Navbar />
@@ -38,7 +41,7 @@ const Home = () => {
                                 month: 'long',
                                 year: 'numeric',
                             })}
-                            location={event.venue}
+                            location={`${event.venue?.venue_name}, ${event.venue?.venue_city}`}
                             eventId={event.event_id}
                         />
                     ))}

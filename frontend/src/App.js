@@ -5,6 +5,8 @@ import Home from './pages/Home';
 import EventDetailPage from './pages/EventDetailPage'; // <--- Tambah ini
 import PrivateRoute from './utils/PrivateRoute';
 
+
+// Komponen utama aplikasi (routing halaman)
 function App() {
   return (
     <Router>

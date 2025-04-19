@@ -4,17 +4,19 @@ import { loginUser } from '../api/axios';
 import '../styles/login.css';
 import '../styles/navbar.css';
 
+// Komponen utama untuk halaman Login
 const Login = () => {
     const navigate = useNavigate();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
 
+    // Fungsi submit Login
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
             console.log("Trying login with:", email, password);
-            const data = await loginUser({ email, password }); // ✅ simpan hasilnya di variabel
+            const data = await loginUser({ email, password }); // simpan hasilnya di variabel
             console.log("Login response:", data); // cek datanya
 
             localStorage.setItem('isLoggedIn', 'true');
@@ -28,6 +30,7 @@ const Login = () => {
         }
     };
 
+    // Struktur tampilan Login
     return (
         <div className="login-area">
             <nav className="navbar">
