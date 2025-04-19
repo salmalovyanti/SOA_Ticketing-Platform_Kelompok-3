@@ -17,14 +17,19 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
-// upload avatar user
+// Fitur mengupload foto profil user
 router.post('/:id/avatar', upload.single('avatar'), controller.uploadAvatar);
-
-router.post('/', controller.createUser); // Create user
-router.get('/', controller.getAllUsers);  // Get all users
-router.get('/:id', controller.getUserById);  // Get user by id
-router.put('/:id', controller.updateUser);  // Update user by id
-router.delete('/:id', controller.deleteUser);  // Delete user by id
-router.put('/:id/profile', controller.updateUserProfile);  // Update user profile
+// fitur menambahkan user
+router.post('/', controller.createUser);
+// Fitur menampilkan seluruh data user
+router.get('/', controller.getAllUsers);
+// Fitur menampilkan satu data user
+router.get('/:id', controller.getUserById);
+// Fitung mengedit data user
+router.put('/:id', controller.updateUser);
+// Fitur menghapus data user
+router.delete('/:id', controller.deleteUser);
+// Fitur mengedit data profil user (hanya untuk data yang dapat dilihat user)
+router.put('/:id/profile', controller.updateUserProfile);
 
 module.exports = router;

@@ -4,18 +4,21 @@ const controller = require('./event.controller');
 
 const ticketController = require('../ticket/ticket.controller')
 
-router.get('/', controller.getAllEvents); //
+// Fitur menampilkan seluruh data event
+router.get('/', controller.getAllEvents);
+// Fitur menambahkan event
 router.post('/', controller.createEvent);
-// events berdasarkan nama category
+// Fitur melihat event berdasarkan nama kategori
 router.get('/category/:id', controller.getByCategory);
-// events berdasarkan nama location
+// Fitur melihat event berdasarkan lokasi
 router.get('/location/:id', controller.getByLocation);
-// page ticket berdasarkan event
+// Fitur melihat tiket berdasarkan satu event
 router.get('/:eventId/ticket', ticketController.getByEventId); 
-// fitur search events berdasarkan nama event
+// Fitur mencari event berdasarkan nama event
 router.get('/search', controller.searchEvents);
-// page detail events
+// fitur melihat detail event
 router.get('/:id', controller.getEventById);
+// Fitur menghapus event
 router.delete('/:id', controller.deleteEvent);
 
 

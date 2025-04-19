@@ -2,7 +2,9 @@ const express = require('express');
 const router = express.Router();
 const wishlistController = require('./wishlist.controller');
 
-router.post('/wishlist', wishlistController.addToWishlist); // Add event to wishlist
-router.get('/wishlist', wishlistController.getMyWishlist); // Get user's wishlist
+// Fitur menambahkan event ke wishlist
+router.post('/', wishlistController.addToWishlist);
+// Fitur menanmpilkan daftar wishlist 
+router.get('/', wishlistController.getMyWishlist);
 
 module.exports = router;
