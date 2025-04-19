@@ -31,7 +31,6 @@ Order.belongsTo(Event, { foreignKey: 'event_id', as: 'event' });
 Cart.belongsTo(Ticket, { foreignKey: 'ticket_id', as: 'ticket' });
 Ticket.hasMany(Cart, { foreignKey: 'ticket_id', as: 'carts' });
 
-
 module.exports = {
   sequelize,
   Cart,

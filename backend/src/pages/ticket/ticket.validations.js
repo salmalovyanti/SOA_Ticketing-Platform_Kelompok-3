@@ -1,5 +1,7 @@
 const Joi = require('joi');
+const { body, validationResult } = require('express-validator');
 
+// Joi Validations (controller dengan skema)
 const createTicketSchema = Joi.object({
   event_id: Joi.number().integer().required(),
   ticket_type: Joi.string().valid('regular', 'vip', 'vvip').required(),
@@ -22,4 +24,36 @@ const purchaseTicketSchema = Joi.object({
   ticket_id: Joi.number().integer().required(),
 });
 
-module.exports = { createTicketSchema, updateTicketSchema, purchaseTicketSchema };
+// express-validator ( validasi array dari req.body seperti bulk upload )
+const validateBulkUploadTickets = [
+  body('event_id')
+    .notEmpty().withMessage('event_id wajib diisi')
+    .isInt().withMessage('event_id harus berupa angka'),
+
+  body('tickets')
+    .isArray({ min: 1 }).withMessage('tickets harus berupa array dan minimal 1 item'),
+
+  body('tickets.*.name')
+    .notEmpty().withMessage('Nama tiket harus diisi'),
+
+  body('tickets.*.price')
+    .isFloat({ min: 0 }).withMessage('Harga tiket harus angka positif'),
+
+  body('tickets.*.stock')
+    .isInt({ min: 1 }).withMessage('Stok tiket harus lebih dari 0'),
+
+  body('tickets.*.ticket_type')
+    .isIn(['early_bird', 'regular', 'vip']).withMessage('Tipe tiket tidak valid'),
+
+  // Middleware penanganan error validasi
+  (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(422).json({ errors: errors.array() });
+    }
+    next();
+  }
+];
+
+// --- Export gabungan
+module.exports = { createTicketSchema, updateTicketSchema, purchaseTicketSchema, validateBulkUploadTickets };

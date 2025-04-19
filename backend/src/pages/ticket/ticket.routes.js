@@ -8,5 +8,6 @@ router.get('/:id', controller.getTicketById);
 router.put('/:id', controller.updateTicket);
 router.delete('/:id', controller.deleteTicket);
 router.post('/purchase-ticket', controller.purchaseTicket);
+router.post('/bulk-upload', validateBulkUploadTickets, controller.bulkUploadTickets);
 
 module.exports = router;

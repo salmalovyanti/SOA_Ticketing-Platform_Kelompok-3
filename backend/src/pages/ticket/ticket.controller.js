@@ -1,5 +1,5 @@
 const service = require('./ticket.service');
-const { purchaseTicketSchema } = require('./ticket.validations');
+const {   createTicketSchema, updateTicketSchema, purchaseTicketSchema } = require('./ticket.validations');
 
 // Create Ticket
 exports.createTicket = async (req, res) => {
@@ -92,5 +92,20 @@ exports.purchaseTicket = async (req, res) => {
   } catch (err) {
     console.error('❌ Error saat purchaseTicket:', err);
     res.status(500).json({ error: 'Server error' });
+  }
+};
+
+exports.bulkUploadTickets = async (req, res) => {
+  try {
+    const { event_id, tickets } = req.body;
+    const uploadedTickets = await ticketService.bulkUploadTickets(event_id, tickets);
+    return res.status(201).json({
+      message: 'Tiket berhasil diunggah',
+      uploaded_tickets: uploadedTickets
+    });
+  } catch (error) {
+    return res.status(400).json({
+      message: error.message || 'Terjadi kesalahan saat mengunggah tiket'
+    });
   }
 };
