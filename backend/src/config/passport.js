@@ -1,3 +1,4 @@
+// Mengimpor modul passport dan strategi autentikasi lokal
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const User = require('../models/user'); // Ganti dengan model User kamu, jika ada

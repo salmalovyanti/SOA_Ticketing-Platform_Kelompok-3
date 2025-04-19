@@ -1,35 +1,42 @@
-// routes/redisRoutes.js
+// Import Express dan buat router
 const express = require('express');
 const router = express.Router();
 
-// Import controller functions
+// Mengelola cache event populer & preload data event ke Redis
 const {
   getPopularEvents,
   preloadEvent
 } = require('../controllers/redis/cacheController');
 
+// Menyimpan token sementara ke Redis
 const {
   storeToken
 } = require('../controllers/redis/tokenController');
 
+// Menghitung jumlah view dan menampilkan leaderboard
 const {
   countView,
   getLeaderboard
 } = require('../controllers/redis/hitCounterController');
 
+
+// Menyimpan dan mengambil riwayat pencarian pengguna
 const {
   saveQuery,
   getSearchHistory
 } = require('../controllers/redis/searchHistoryController');
 
+// Mengantri user saat event populer/war tiket
 const {
   enqueueUser
 } = require('../controllers/redis/queueController');
 
+// Mengatur dan mengupdate stok tiket
 const {
   updateStock
 } = require('../controllers/redis/stockController');
 
+// Mengunci seat untuk mencegah double booking
 const {
   lockSeat,
   preventDoubleBooking
@@ -51,7 +58,6 @@ router.get('/leaderboard', getLeaderboard);
 // Search history
 router.post('/search', saveQuery);
 router.post('/search/history', getSearchHistory);
-
 
 // Queue system
 router.post('/queue/:eventId', enqueueUser);

@@ -1,3 +1,4 @@
+// Mengimpor library yang dibutuhkan
 const express = require('express');
 const bcrypt = require('bcrypt');
 const db = require('../config/db'); // koneksi ke database
@@ -6,9 +7,9 @@ const jwt = require('jsonwebtoken');
 const SECRET_KEY = 'tikeroo_secret_key';
 const rateLimit = require('express-rate-limit');
 
-const saltRounds = 10;
+const saltRounds = 10; // Jumlah salt rounds untuk bcrypt saat hashing password
 
-// Fungsi untuk membuat JWT
+// Fungsi untuk membuat JWT token berdasarkan user_id dan email
 function generateToken(user) {
     return jwt.sign(
         { user_id: user.user_id, email: user.email },
@@ -29,16 +30,21 @@ const loginLimiter = rateLimit({
 router.post('/register', (req, res) => {
     const { name, email, password } = req.body;
 
+    // Validasi: semua field wajib diisi
     if (!name || !email || !password) {
         return res.status(400).json({ message: 'Semua field harus diisi' });
     }
 
+    // Hash password sebelum disimpan ke database
     bcrypt.hash(password, saltRounds, (err, hashedPassword) => {
         if (err) return res.status(500).json({ message: 'Error hashing password' });
 
+        // Query untuk insert user baru ke tabel users
         const sql = `INSERT INTO users (name, email, password_hash) VALUES (?, ?, ?)`;
         db.query(sql, [name, email, hashedPassword], (err, result) => {
             if (err) return res.status(500).json({ message: 'Gagal registrasi', error: err });
+            
+            // Jika berhasil, kirim response user_id, name, dan email
             res.status(201).json({
                 message: 'Registrasi berhasil',
                 user: { user_id: result.insertId, name, email }
@@ -51,20 +57,28 @@ router.post('/register', (req, res) => {
 router.post('/login', loginLimiter, (req, res) => {
     const { email, password } = req.body;
 
+    // Query untuk mencari user berdasarkan email
     const sql = 'SELECT * FROM users WHERE email = ?';
     db.query(sql, [email], (err, result) => {
         if (err) return res.status(500).send(err);
+
+        // Jika user tidak ditemukan berdasarkan email
         if (result.length === 0) {
             return res.status(400).send({ message: 'Email tidak ditemukan' });
         }
 
         const user = result[0];
+
+        // Bandingkan password yang diinput dengan hash di database
         bcrypt.compare(password, user.password_hash, (err, isMatch) => {
             if (err) return res.status(500).send(err);
+
+            // Jika password tidak cocok
             if (!isMatch) {
                 return res.status(400).send({ message: 'Password salah' });
             }
 
+            // Jika cocok, buat JWT token
             const token = generateToken(user); // gunakan fungsi generateToken
 
             res.status(200).send({
