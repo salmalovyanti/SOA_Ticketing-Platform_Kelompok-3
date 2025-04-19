@@ -1,5 +1,5 @@
 const service = require('./user.service');
-const { createUserSchema, updateUserSchema, updateUserProfileSchema } = require('./user.validation');
+const { createUserSchema, updateUserSchema, updateUserProfileSchema } = require('./user.validations');
 
 exports.createUser = async (req, res) => {
   try {

@@ -1,5 +1,5 @@
 const service = require('./wishlist.service');
-const { addToWishlistSchema } = require('./wishlist.validation');
+const { addToWishlistSchema } = require('./wishlist.validations');
 
 // POST /api/wishlist : Tambah event ke wishlist
 exports.addToWishlist = async (req, res) => {

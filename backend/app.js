@@ -17,7 +17,7 @@ const redisClient = redis.createClient({
   },
 });
 redisClient.connect().catch(console.error);
-const { oauth2Client } = require('./config/googleAuth');  // pastikan oauth2Client sesuai
+const { oauth2Client } = require('./src/config/googleAuth');  // pastikan oauth2Client sesuai
 const { google } = require('googleapis');
 
 // Import Routes
@@ -36,7 +36,7 @@ const waitingQueueRoutes = require('./src/pages/waiting_queue/waiting_queue.rout
 const wishlistRoutes = require('./src/pages/wishlist/wishlist.routes');
 const authRoutes = require('./src/routes/authRoutes');
 const redisRoutes = require('./src/routes/redisRoutes'); // API Redis
-const googleRoutes = require('./routes/googleRoutes');
+const googleRoutes = require('./src/routes/googleRoutes');
 
 
 const app = express();
