@@ -18,6 +18,8 @@ router.get('/:eventId/ticket', ticketController.getByEventId);
 router.get('/search', controller.searchEvents);
 // fitur melihat detail event
 router.get('/:id', controller.getEventById);
+// Fitur update detail event
+router.put('/:id', controller.updateEvent);
 // Fitur menghapus event
 router.delete('/:id', controller.deleteEvent);
 

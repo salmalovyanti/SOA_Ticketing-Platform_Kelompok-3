@@ -1,6 +1,7 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../../config/database');
 
+// Definisi model Event yang merepresentasikan tabel events di database
 const Event = sequelize.define('Event', {
   event_id: {
     type: DataTypes.BIGINT,
@@ -62,9 +63,9 @@ const Event = sequelize.define('Event', {
   }
 }, {
   tableName: 'events',
-  timestamps: true,
-  paranoid: true,
-  underscored: true
+  timestamps: true,  // Menambahkan createdAt dan updatedAt secara otomatis
+  paranoid: true,   // Mengaktifkan soft delete dengan kolom deletedAt
+  underscored: true  // Gunakan format snake_case untuk nama kolom di database
 });
 
 module.exports = Event;

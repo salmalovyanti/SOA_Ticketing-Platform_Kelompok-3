@@ -29,7 +29,25 @@ exports.create = async (data) => {
 };
 
 exports.getById = async (id) => {
-  return await Event.findByPk(id); // atau findOne({ where: { event_id: id } }) kalau perlu
+  return await Event.findByPk(id, {
+    include: [
+      {
+        model: Venue,
+        as: 'venue',
+        attributes: ['venue_name', 'venue_city', 'address', 'html_embed'],
+        include: {
+          model: Location,
+          as: 'location',
+          attributes: ['location_name']
+        }
+      },
+      {
+        model: Category,
+        as: 'category',
+        attributes: ['category_name']
+      }
+    ]
+  });
 };
 
 exports.getByCategory = async (categoryId) => {
@@ -95,6 +113,13 @@ exports.searchEvents = async (keyword) => {
       }
     ]
   });
+};
+
+exports.update = async (id, data) => {
+  const event = await Event.findByPk(id);
+  if (!event) return null;
+  await event.update(data);
+  return event;
 };
 
 exports.delete = async (id) => {

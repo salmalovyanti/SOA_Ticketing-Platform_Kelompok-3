@@ -1,5 +1,6 @@
 const service = require('./event.service');
 
+// Handler untuk mendapatkan semua event
 exports.getAllEvents = async (req, res) => {
   try {
     const events = await service.getAll();
@@ -10,6 +11,7 @@ exports.getAllEvents = async (req, res) => {
   }
 };
 
+// Handler untuk membuat event baru
 exports.createEvent = async (req, res) => {
   try {
     const newEvent = await service.create(req.body);
@@ -19,6 +21,7 @@ exports.createEvent = async (req, res) => {
   }
 };
 
+// Handler untuk mendapatkan detail event berdasarkan ID
 exports.getEventById = async (req, res) => {
   try {
     const event = await service.getById(req.params.id);
@@ -32,6 +35,7 @@ exports.getEventById = async (req, res) => {
   }
 };
 
+// Handler untuk mendapatkan semua event berdasarkan kategori
 exports.getByCategory = async (req, res) => {
   try {
     const categoryId = req.params.id;
@@ -43,6 +47,7 @@ exports.getByCategory = async (req, res) => {
   }
 };
 
+// Handler untuk mendapatkan semua event berdasarkan lokasi
 exports.getByLocation = async (req, res) => {
   try {
     const locationId = req.params.id;
@@ -54,6 +59,7 @@ exports.getByLocation = async (req, res) => {
   }
 };
 
+// Handler untuk mencari event berdasarkan nama (search)
 exports.searchEvents = async (req, res) => {
   try {
     const keyword = req.query.name;
@@ -69,6 +75,21 @@ exports.searchEvents = async (req, res) => {
   }
 };
 
+// Handler untuk mengupdate event berdasarkan ID
+exports.updateEvent = async (req, res) => {
+  try {
+    const updatedEvent = await service.update(req.params.id, req.body);
+    if (!updatedEvent) {
+      return res.status(404).json({ message: 'Event not found' });
+    }
+    res.status(200).json({ message: 'Event updated successfully', data: updatedEvent });
+  } catch (error) {
+    console.error('❌ Error saat updateEvent:', error);
+    res.status(500).json({ error: 'Server error' });
+  }
+};
+
+// Handler untuk menghapus event berdasarkan ID
 exports.deleteEvent = async (req, res) => {
   try {
     const eventId = req.params.id;
