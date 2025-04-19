@@ -44,7 +44,9 @@ Tikeroo
 - JWT Access Token
 
 ### Security
-
+- Broken Authentication: JWT
+- Sensitive data exposure: Bcrypt password
+- Injection: Sequelize ORM
 
 ### 3rd Party Integration
 - Gmail API — Email Confirmation & Reminder
