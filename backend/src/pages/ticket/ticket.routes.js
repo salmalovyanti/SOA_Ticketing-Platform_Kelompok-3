@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const controller = require('./ticket.controller');
+const { validateBulkUploadTickets } = require('./ticket.validations');
 
 router.post('/', controller.createTicket);
 router.get('/', controller.getAllTickets);
