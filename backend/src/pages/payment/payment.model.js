@@ -31,20 +31,6 @@ const Payment = sequelize.define('Payment', {
   paid_at: {
     type: DataTypes.DATE,
     allowNull: true
-  },
-  created_at: {
-    type: DataTypes.TIMESTAMP,
-    defaultValue: sequelize.literal('CURRENT_TIMESTAMP'),
-    allowNull: false
-  },
-  updated_at: {
-    type: DataTypes.TIMESTAMP,
-    defaultValue: sequelize.literal('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'),
-    allowNull: false
-  },
-  deleted_at: {
-    type: DataTypes.TIMESTAMP,
-    allowNull: true
   }
 }, {
   tableName: 'payments',
