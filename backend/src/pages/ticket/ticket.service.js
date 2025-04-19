@@ -96,3 +96,31 @@ exports.purchase = async (data) => {
 
   return purchasedTicket;
 };
+
+exports.purchase = async (data) => {
+  const { user_id, event_id, ticket_id } = data;
+
+  const user = await User.findByPk(user_id);
+  if (!user) throw new Error('User not found');
+
+  const event = await Event.findByPk(event_id);
+  if (!event) throw new Error('Event not found');
+
+  const ticket = await Ticket.findByPk(ticket_id);
+  if (!ticket) throw new Error('Ticket not found');
+
+  if (ticket.stock <= 0) {
+    throw new Error('Ticket sold out');
+  }
+
+  // Kurangi stok dan tambah sold
+  ticket.stock -= 1;
+  ticket.sold += 1;
+  await ticket.save();
+
+  return {
+    message: 'Ticket purchased successfully',
+    ticket_id: ticket.ticket_id,
+    remaining_stock: ticket.stock
+  };
+};
