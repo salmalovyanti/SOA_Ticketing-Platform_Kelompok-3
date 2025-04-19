@@ -2,6 +2,7 @@ const db = require('../../config/database');
 const { Event, Category, Venue, Location } = require('../../models'); 
 const { Op } = require('sequelize');
 
+// Mengambil semua event dengan relasi kategori dan venue
 exports.getAll = async () => {
   return await Event.findAll({
     include: [
@@ -24,43 +25,29 @@ exports.getAll = async () => {
   });
 };
 
+// Membuat event baru menggunakan data dari request body
 exports.create = async (data) => {
   return await Event.create(data);
 };
 
+// Mengambil satu event berdasarkan primary key (event_id)
 exports.getById = async (id) => {
-  return await Event.findByPk(id, {
-    include: [
-      {
-        model: Venue,
-        as: 'venue',
-        attributes: ['venue_name', 'venue_city', 'address', 'html_embed'],
-        include: {
-          model: Location,
-          as: 'location',
-          attributes: ['location_name']
-        }
-      },
-      {
-        model: Category,
-        as: 'category',
-        attributes: ['category_name']
-      }
-    ]
-  });
+  return await Event.findByPk(id); 
 };
 
+// Mengambil semua event berdasarkan category_id tertentu
 exports.getByCategory = async (categoryId) => {
   return await Event.findAll({
     where: { category_id: categoryId },
     include: [{
       model: Category,
-      as: 'category', // ini penting!
-      attributes: ['category_name'] // opsional, tapi biasanya dipakai
+      as: 'category', 
+      attributes: ['category_name'] 
     }]
   });
 };
 
+// Mengambil semua event berdasarkan location_id 
 exports.getByLocation = async (locationId) => {
   return await Event.findAll({
     include: [
@@ -73,7 +60,7 @@ exports.getByLocation = async (locationId) => {
             model: Location,
             as: 'location',
             attributes: ['location_name'],
-            where: { location_id: locationId } // pindahkan ke sini!
+            where: { location_id: locationId } 
           }
         ]
       },
@@ -86,6 +73,7 @@ exports.getByLocation = async (locationId) => {
   });
 };
 
+// Mencari event berdasarkan keyword di nama event
 exports.searchEvents = async (keyword) => {
   return await Event.findAll({
     where: {
@@ -115,6 +103,7 @@ exports.searchEvents = async (keyword) => {
   });
 };
 
+// Mengupdate event data event berdasarkan event_id
 exports.update = async (id, data) => {
   const event = await Event.findByPk(id);
   if (!event) return null;
@@ -122,6 +111,7 @@ exports.update = async (id, data) => {
   return event;
 };
 
+// Menghapus event berdasarkan event_id
 exports.delete = async (id) => {
   const deletedCount = await Event.destroy({
     where: { event_id: id }
