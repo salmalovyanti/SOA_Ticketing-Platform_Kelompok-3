@@ -10,7 +10,7 @@ const EventCard = ({ title, date, location, eventId }) => {
     navigate(`/events/${eventId}`);
   };
 
-  // Struktur tampilan Navbar
+  // Struktur tampilan EventCard
   return (
     <div className="event-card" onClick={handleClick}>
       <h3>{title}</h3>
