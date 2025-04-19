@@ -9,6 +9,6 @@ export const loginUser = async (credentials) => {
   const response = await API.post('/api/auth/login', credentials);
   return response.data;
 };
-export const fetchEvents = () => API.get('/api/events');
+export const fetchEvents = () => API.get('/api/event');
 
 export default API;

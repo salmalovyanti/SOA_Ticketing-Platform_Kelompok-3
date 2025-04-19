@@ -44,7 +44,7 @@ const port = process.env.PORT || 3000;
 
 // Konfigurasi CORS — biarkan akses dari frontend di port 5500
 const corsOptions = {
-  origin: 'http://127.0.0.1:5500', // Sesuaikan dengan frontend Anda
+  origin: ['http://127.0.0.1:5000', 'http://localhost:5000'], // Sesuaikan dengan frontend Anda
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Tambahkan metode lain jika diperlukan
   credentials: true,
 };
@@ -67,8 +67,8 @@ app.use(
     saveUninitialized: false,
     cookie: {
       secure: false,
-   },
- })
+    },
+  })
 );
 
 // Inisialisasi Passport
@@ -145,7 +145,8 @@ app.get('/auth/google', passport.authenticate('google', {
 app.get('/auth/callback',
   passport.authenticate('google', {
     failureRedirect: '/auth/failed',
-    successRedirect: 'http://127.0.0.1:5500/public/dashboard.html', // Redirect jika berhasil
+    // successRedirect: 'http://127.0.0.1:5500/public/dashboard.html', // Redirect jika berhasil
+    successRedirect: 'http://localhost:5000/',
   }),
   // Anda tidak perlu handler di sini jika menggunakan successRedirect
 );

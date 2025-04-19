@@ -10,7 +10,7 @@ const Home = () => {
     useEffect(() => {
         const fetchEvents = async () => {
             try {
-                const res = await api.get('/api/events');
+                const res = await api.get('/api/event');
                 setEvents(res.data); // Asumsikan res.data adalah array event
             } catch (err) {
                 console.error('Gagal memuat event:', err);

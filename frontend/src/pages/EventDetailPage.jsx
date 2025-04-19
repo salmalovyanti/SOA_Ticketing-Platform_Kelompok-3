@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import api from '../api/axios';
 import { saveOrderOffline } from '../utils/offlineHandler';
+import '../styles/eventDetail.css';
 
 const EventDetailPage = () => {
   const { id } = useParams();
@@ -11,7 +12,7 @@ const EventDetailPage = () => {
   useEffect(() => {
     const fetchEvent = async () => {
       try {
-        const res = await api.get(`/api/events/${id}`);
+        const res = await api.get(`/api/event/${id}`);
         setEvent(res.data);
       } catch (err) {
         console.error('Gagal memuat detail event:', err);
