@@ -1,0 +1,11 @@
+{
+    "1": {
+      "receivePromo": true,
+      "receiveReminder": false
+    },
+    "2": {
+      "receivePromo": false,
+      "receiveReminder": true
+    }
+  }
+  
