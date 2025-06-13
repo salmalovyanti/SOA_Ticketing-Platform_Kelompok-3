@@ -6,17 +6,21 @@ const passport = require('./src/config/passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const config = require('./src/config/config');
 require('dotenv').config();
-// redis
+
+// Redis Session Setup
 const session = require('express-session');
-const redis = require("redis");
+// const redis = require("redis");
 const redisStore = require('connect-redis').default;
-const redisClient = redis.createClient({
-  socket: {
-    host: '127.0.0.1',
-    port: 6379
-  },
-});
-redisClient.connect().catch(console.error);
+// const redisClient = redis.createClient({
+//   socket: {
+//     host: '127.0.0.1',
+//     port: 6379
+//   },
+// });
+// redisClient.connect().catch(console.error);
+const redisClient = require('./src/config/redisClient');
+
+// Google Auth
 const { oauth2Client } = require('./src/config/googleAuth');  // pastikan oauth2Client sesuai
 const { google } = require('googleapis');
 

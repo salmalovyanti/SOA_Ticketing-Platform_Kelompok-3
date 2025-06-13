@@ -6,18 +6,33 @@ require('dotenv').config();
 const redisClient = redis.createClient({
   socket: {
     host: process.env.REDIS_HOST,
-    port: process.env.REDIS_PORT
+    port: process.env.REDIS_PORT,
+    connectTimeout: 10000,
   },
   password: process.env.REDIS_PASSWORD || undefined
 });
 
 // Menangani error yang terjadi saat mencoba menghubungkan ke Redis
-redisClient.on('error', (err) => console.error('Redis Client Error', err));
+redisClient.on('error', (err) => {
+  if (err.name === 'ConnectionTimeoutError') {
+    console.warn('Redis timeout, will retry...');
+  } else {
+    console.error('Redis Client Error:', err);
+  }
+});
 
-// Menampilkan pesan ke konsol jika Redis berhasil terhubung
-redisClient.on('connect', () => console.log('Redis connected'));
+// // Menampilkan pesan ke konsol jika Redis berhasil terhubung
+// redisClient.on('connect', () => console.log('Redis connected'));
+// redisClient.on('ready', () => console.log('Redis is ready'));
 
-// Menyambungkan Redis client
-redisClient.connect();
+// Connect Redis
+(async () => {
+  try {
+    await redisClient.connect();
+    console.log('✅ Redis connected');
+  } catch (err) {
+    console.error('❌ Failed to connect to Redis:', err);
+  }
+})();
 
 module.exports = redisClient;
