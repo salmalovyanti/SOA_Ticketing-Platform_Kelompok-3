@@ -39,4 +39,17 @@ const OrderDetail = sequelize.define('OrderDetail', {
   underscored: true
 });
 
+OrderDetail.getDetailsByOrderId = async function (orderId) {
+  return await OrderDetail.findAll({
+    where: { order_id: orderId },
+    attributes: ['order_detail_id', 'quantity']
+  });
+};
+
+OrderDetail.associate = (models) => {
+    OrderDetail.belongsTo(models.Order, { foreignKey: 'order_id', as: 'order' });
+    OrderDetail.belongsTo(models.Ticket, { foreignKey: 'ticket_id', as: 'ticket' });
+    OrderDetail.hasMany(models.IssuedTicket, { foreignKey: 'order_detail_id', as: 'issued_tickets' });
+  };
+
 module.exports = OrderDetail;

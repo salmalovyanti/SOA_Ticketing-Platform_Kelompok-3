@@ -2,11 +2,16 @@ const Joi = require('joi');
 
 // Skema validasi untuk membuat order
 const createOrderSchema = Joi.object({
-  order_date: Joi.date().required(),
-  quantity: Joi.number().integer().required(),
+  user_id: Joi.number().required(),
+  event_id: Joi.number().required(),
   total_price: Joi.number().required(),
-  customer_name: Joi.string().required(),
-  event_id: Joi.number().integer().required(),
+  order_status: Joi.string().valid('pending', 'paid').default('pending'),
+  order_details: Joi.array().items(
+    Joi.object({
+      ticket_id: Joi.number().required(),
+      quantity: Joi.number().min(1).required()
+    })
+  )
 });
 
 // Skema validasi untuk mengedit data order

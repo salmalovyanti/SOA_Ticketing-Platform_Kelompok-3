@@ -15,7 +15,7 @@ const User = require('../pages/user/user.model');
 const Venue = require('../pages/venue/venue.model');
 const WaitingQueue = require('../pages/waiting_queue/waiting_queue.model')
 const Wishlist = require('../pages/wishlist/wishlist.model');
-
+const IssuedTicket = require('./issuedticket');
 // ASSOCIATIONS- Menentukan relasi antar model
 
 // Satu kategori bisa memiliki banyak event
@@ -58,6 +58,9 @@ Cart.belongsTo(Ticket, { foreignKey: 'ticket_id', as: 'ticket' });
 // Dan satu tiket bisa masuk ke banyak cart
 Ticket.hasMany(Cart, { foreignKey: 'ticket_id', as: 'carts' });
 
+IssuedTicket.belongsTo(OrderDetail, { foreignKey: 'order_detail_id' });
+IssuedTicket.belongsTo(User, { foreignKey: 'user_id' });
+
 // Mengekspor semua model dan instance Sequelize agar bisa digunakan di file lain
 module.exports = {
   sequelize,
@@ -73,5 +76,6 @@ module.exports = {
   User,
   Venue,
   WaitingQueue,
-  Wishlist
+  Wishlist,
+  IssuedTicket
 };
