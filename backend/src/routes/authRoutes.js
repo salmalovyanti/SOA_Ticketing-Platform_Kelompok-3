@@ -4,8 +4,11 @@ const bcrypt = require('bcrypt');
 const db = require('../config/db'); // koneksi ke database
 const router = express.Router();
 const jwt = require('jsonwebtoken');
-const SECRET_KEY = 'tikeroo_secret_key';
+const redisClient = require('../config/redisClient'); // Tambahkan ini
 const rateLimit = require('express-rate-limit');
+require('dotenv').config()
+
+const SECRET_KEY = process.env.JWT_SECRET || 'tikeroo_secret_key';
 
 const saltRounds = 10; // Jumlah salt rounds untuk bcrypt saat hashing password
 
@@ -54,12 +57,12 @@ router.post('/register', (req, res) => {
 });
 
 // LOGIN
-router.post('/login', loginLimiter, (req, res) => {
+router.post('/login', loginLimiter, async (req, res) => {
     const { email, password } = req.body;
 
     // Query untuk mencari user berdasarkan email
     const sql = 'SELECT * FROM users WHERE email = ?';
-    db.query(sql, [email], (err, result) => {
+    db.query(sql, [email], async (err, result) => {
         if (err) return res.status(500).send(err);
 
         // Jika user tidak ditemukan berdasarkan email
@@ -70,27 +73,51 @@ router.post('/login', loginLimiter, (req, res) => {
         const user = result[0];
 
         // Bandingkan password yang diinput dengan hash di database
-        bcrypt.compare(password, user.password_hash, (err, isMatch) => {
-            if (err) return res.status(500).send(err);
+        const isMatch = await bcrypt.compare(password, user.password_hash);
+        // Jika password tidak cocok
+        if (!isMatch) {
+            return res.status(400).send({ message: 'Password salah' });
+        }
 
-            // Jika password tidak cocok
-            if (!isMatch) {
-                return res.status(400).send({ message: 'Password salah' });
+        // Jika cocok, buat JWT token
+        const token = generateToken(user);
+
+        // ✅ SIMPAN TOKEN KE REDIS
+        await redisClient.set(user.email, token);
+
+        res.status(200).send({
+            message: 'Login sukses',
+            token,
+            user: {
+                user_id: user.user_id,
+                name: user.name,
+                email: user.email
             }
-
-            // Jika cocok, buat JWT token
-            const token = generateToken(user); // gunakan fungsi generateToken
-
-            res.status(200).send({
-                message: 'Login sukses',
-                token,
-                user: {
-                    user_id: user.user_id,
-                    name: user.name,
-                    email: user.email
-                }
-            });
         });
+
+        // // Bandingkan password yang diinput dengan hash di database
+        // bcrypt.compare(password, user.password_hash, (err, isMatch) => {
+        //     if (err) return res.status(500).send(err);
+
+        //     // Jika password tidak cocok
+        //     if (!isMatch) {
+        //         return res.status(400).send({ message: 'Password salah' });
+        //     }
+
+        //     // Jika cocok, buat JWT token
+        //     const token = generateToken(user); // gunakan fungsi generateToken
+            
+
+        //     res.status(200).send({
+        //         message: 'Login sukses',
+        //         token,
+        //         user: {
+        //             user_id: user.user_id,
+        //             name: user.name,
+        //             email: user.email
+        //         }
+        //     });
+        // });
     });
 });
 

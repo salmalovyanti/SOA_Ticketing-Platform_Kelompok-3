@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-     "worker": "node src/workers/redisNotifWorker.js",
+    "worker": "node src/workers/redisNotifWorkers.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -34,6 +34,7 @@
     "qrcode": "^1.5.4",
     "redis": "^4.7.1",
     "sequelize": "^6.37.7",
-    "socket.io": "^4.8.1"
+    "socket.io": "^4.8.1",
+    "uuid": "^11.1.0"
   }
 }
