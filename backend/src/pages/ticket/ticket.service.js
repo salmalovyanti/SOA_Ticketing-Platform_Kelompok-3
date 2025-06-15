@@ -1,5 +1,6 @@
 const db = require('../../config/database'); 
 const { Ticket, Event, Category, User } = require('../../models');
+const IssuedTicket = require('../../models/issuedticket');
 
 // Membuat tiket baru
 exports.create = async (data) => {
@@ -127,4 +128,18 @@ exports.purchase = async (data) => {
     ticket_id: ticket.ticket_id, // ID tiket yang dibeli
     remaining_stock: ticket.stock // Sisa stok tiket yang tersedia
   };
+};
+
+// Proses scan barcode
+exports.processScan = async (ticket_code) => {
+  const ticket = await IssuedTicket.findOne({ where: { ticket_code } });
+
+  if (!ticket) return { status: 'not_found' };
+  if (ticket.is_used) return { status: 'used' };
+
+  ticket.is_used = true;
+  ticket.used_at = new Date();
+  await ticket.save();
+
+  return { status: 'success', ticket };
 };

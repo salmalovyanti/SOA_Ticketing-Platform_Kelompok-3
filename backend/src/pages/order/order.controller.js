@@ -32,7 +32,7 @@ exports.createOrder = async (req, res) => {
 
     // Generate QR codes untuk setiap ticket_code
     const qrCodes = await Promise.all(
-      issuedTickets.map(t => generateQRCode(`https://example.com/Tikeroo/${t.ticket_code}`))
+      issuedTickets.map(t => generateQRCode(t.ticket_code))
     );
 
     // Kirim email, misal kamu ubah sendOrderConfirmationEmail untuk terima array qrCodes

@@ -3,6 +3,8 @@ const router = express.Router();
 const controller = require('./ticket.controller');
 const { validateBulkUploadTickets } = require('./ticket.validations');
 
+// Endpoint untuk scan tiket barcode
+router.get('/scan-ticket', controller.scanTicket);
 // Endpoint untuk menambahkan jenis tiket ke event
 router.post('/', controller.createTicket);
 // Endpoint untuk menampilkan seluruh data tiket
