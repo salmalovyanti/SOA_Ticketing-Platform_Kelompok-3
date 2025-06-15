@@ -3,8 +3,6 @@ const router = express.Router();
 const controller = require('./cart.controller');
 const { authenticateToken } = require('../../middleware/authMiddleware');
 
-console.log('Tipe authenticateJWT:', typeof authenticateToken); // HARUSNYA "function"
-
 // Endpoint untuk menambahkan tiket ke keranjang
 router.post('/add', authenticateToken, controller.addToCart);
 // Endpoint untuk melihat isi keranjang user
