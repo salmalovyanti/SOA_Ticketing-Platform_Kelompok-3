@@ -1,10 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const wishlistController = require('./wishlist.controller');
+const { authenticateToken } = require('../../middleware/authMiddleware');
 
 // Endpoint untuk menambahkan event ke wishlist
-router.post('/', wishlistController.addToWishlist);
+router.post('/', authenticateToken, wishlistController.addToWishlist);
 // Endpoint untuk menampilkan daftar wishlist 
-router.get('/', wishlistController.getMyWishlist);
+router.get('/', authenticateToken, wishlistController.getMyWishlist);
 
 module.exports = router;
