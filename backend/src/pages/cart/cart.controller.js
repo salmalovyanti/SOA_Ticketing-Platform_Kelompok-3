@@ -10,8 +10,17 @@ exports.addToCart = async (req, res) => {
             return res.status(400).json({ error: error.details[0].message });
         }
 
+        // Ambil user_id dari token JWT (req.user)
+        const userId = req.user?.user_id;
+        if (!userId) {
+            return res.status(401).json({ error: 'Unauthorized: user_id tidak tersedia dari token' });
+        }
+
+        // Gabungkan user_id ke value
+        const payload = { ...value, user_id: userId };
+
         // Tambahkan tiket ke keranjang
-        const newCartItem = await service.addTicket(value);
+        const newCartItem = await service.addToCart(payload);
         res.status(201).json({
             message: 'Tiket berhasil ditambahkan ke keranjang',
             data: newCartItem
@@ -26,7 +35,7 @@ exports.addToCart = async (req, res) => {
 exports.getMyCart = async (req, res) => {
     try {
         // Ambil user_id dari auth atau query parameter
-        const userId = req.user?.id || req.query.user_id;
+        const userId = req.user?.user_id || req.query.user_id;
 
         // Validasi user_id
         if (!userId) {
@@ -54,7 +63,7 @@ exports.checkout = async (req, res) => {
             return res.status(400).json({ error: error.details[0].message });
         }
 
-        const userId = req.user?.id || req.query.user_id; // Ambil user_id dari auth atau query param
+        const userId = req.user?.user_id || req.query.user_id; // Ambil user_id dari auth atau query param
         if (!userId) {
             return res.status(400).json({ error: 'User ID tidak ditemukan' });
         }

@@ -2,7 +2,7 @@ const Joi = require('joi');
 
 // Skema validasi untuk menambahkan tiket ke keranjang
 const addToCartSchema = Joi.object({
-    user_id: Joi.number().integer().required(),
+    // user_id: Joi.number().integer().required(),
     ticket_id: Joi.number().integer().required(),
     quantity: Joi.number().integer().min(1).required()
   });

@@ -1,4 +1,4 @@
-const { Cart, Ticket, Event } = require('../../models');
+const { Cart, Ticket, Event, Order, OrderDetail, sequelize } = require('../../models');
 
 // Mengambil data isi keranjang user
 exports.getCartByUser = async (user_id) => {
@@ -8,7 +8,7 @@ exports.getCartByUser = async (user_id) => {
       {
         model: Ticket,
         as: 'ticket',
-        attributes: ['ticket_id', 'ticket_name', 'price', 'quota'],
+        attributes: ['ticket_id', 'name', 'price', 'stock'],
         include: [
           {
             model: Event,
@@ -33,7 +33,7 @@ exports.addToCart = async (data) => {
 
 // Memproses checkout dari keranjang user dan membuat pesanan baru
 exports.checkout = async (userId, { payment_method }) => {
-    const t = await db.transaction(); // Mulai transaksi untuk menjaga konsistensi data
+    const t = await sequelize.transaction(); // Mulai transaksi untuk menjaga konsistensi data
 
     try {
         // Ambil semua item dalam keranjang pengguna
@@ -45,16 +45,17 @@ exports.checkout = async (userId, { payment_method }) => {
             include: {
                 model: Ticket,
                 as: 'ticket',
-                attributes: ['ticket_id', 'ticket_price']
+                where: { event_id },
+                attributes: ['ticket_id', 'price', 'event_id']
             },
             transaction: t
         });
 
         if (!cartItems.length) {
-            throw new Error('Keranjang kosong, tidak ada item untuk checkout');
+            throw new Error('Tidak ada tiket dari event ini di keranjang');
         }
         // Hitung total harga
-        const totalAmount = cartItems.reduce((total, item) => total + (item.quantity * item.ticket.ticket_price), 0);
+        const totalAmount = cartItems.reduce((total, item) => total + (item.quantity * item.ticket.price), 0); //
         // Buat entri di tabel orders
         const newOrder = await Order.create({
             user_id: userId,
@@ -62,7 +63,7 @@ exports.checkout = async (userId, { payment_method }) => {
             status: 'pending',
             total_amount: totalAmount,
             payment_status: 'unpaid',
-            payment_method: payment_method
+            payment_method: payment_method //
         }, { transaction: t });
 
         // Tambahkan item pesanan ke order_items
@@ -70,14 +71,15 @@ exports.checkout = async (userId, { payment_method }) => {
             order_id: newOrder.order_id,
             ticket_id: item.ticket.ticket_id,
             quantity: item.quantity,
-            price: item.ticket.ticket_price
+            price: item.ticket.price
         }));
 
         await OrderItem.bulkCreate(orderItems, { transaction: t });
         // Hapus item dari keranjang setelah checkout
         await Cart.destroy({
             where: {
-                user_id: userId
+                user_id: userId,
+                ticket_id: cartItems.map(item => item.ticket_id)
             },
             transaction: t
         });
