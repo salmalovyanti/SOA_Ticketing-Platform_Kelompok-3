@@ -3,17 +3,36 @@ const { refundOrderSchema } = require('./order.validations');
 const { generateQRCode } = require('./utils/qrcode');
 const { sendOrderConfirmationEmail } = require('./utils/emailSender');
 const { createOrderSchema } = require('./order.validations');
+const redisClient = require('../../config/redisClient');
 
 // Handler untuk membuat order
 exports.createOrder = async (req, res) => {
   try {
+    const userId = req.body.user_id;
+    const key = `order_rate_limit:${userId}`;
+    const windowInSeconds = 1800;
+    const maxRequests = 2;
 
+    // Ambil jumlah request saat ini
+    const current = await redisClient.incr(key);
+
+    if (current === 1) {
+      // Set expired hanya sekali saat key baru dibuat
+      await redisClient.expire(key, windowInSeconds);
+    }
+
+    if (current > maxRequests) {
+      return res.status(429).json({
+        error: 'Terlalu banyak permintaan. Silakan coba lagi dalam 30 menit.'
+      });
+    }
+
+    // ✅ Lanjut proses buat order seperti biasa
     const { error } = createOrderSchema.validate(req.body);
     if (error) return res.status(400).json({ error: error.message });
 
     const data = req.body;
 
-    // Dapatkan order dan semua issued tickets
     const { order, issuedTickets } = await service.createOrderWithTickets(
       {
         user_id: data.user_id,
@@ -25,17 +44,14 @@ exports.createOrder = async (req, res) => {
       data.user_id
     );
 
-    // Ambil email dan nama event
     const result = await service.getUserAndEventForOrder(order.order_id);
     if (!result) return res.status(404).json({ error: 'User or event not found' });
-    const { email, event_name } = result;
 
-    // Generate QR codes untuk setiap ticket_code
+    const { email, event_name } = result;
     const qrCodes = await Promise.all(
       issuedTickets.map(t => generateQRCode(t.ticket_code))
     );
 
-    // Kirim email, misal kamu ubah sendOrderConfirmationEmail untuk terima array qrCodes
     await sendOrderConfirmationEmail(email, event_name, order.order_id, qrCodes);
 
     res.status(201).json({ message: 'Order created successfully', order });
@@ -45,6 +61,7 @@ exports.createOrder = async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 };
+
 
 // Handler untuk menampilkan seluruh data order
 exports.getAllOrders = async (req, res) => {
