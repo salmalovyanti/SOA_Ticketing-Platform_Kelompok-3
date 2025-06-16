@@ -22,6 +22,7 @@ async function run() {
   await consumer.run({
     eachMessage: async ({ topic, partition, message }) => {
       const msg = JSON.parse(message.value.toString());
+      io.emit('notif_alert', msg);
       console.log('notif_alert', msg); // kirim ke frontend via socket.io
     }
   });
