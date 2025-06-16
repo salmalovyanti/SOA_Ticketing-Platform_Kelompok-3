@@ -1,5 +1,5 @@
 const { google } = require('googleapis');
-const { oauth2Client } = require('../../../config/googleAuth');
+const { oauth2Client } = require('../config/googleAuth');
 
 exports.sendOrderConfirmationEmail = async (email, eventName, orderId, qrBase64Array) => {
   const gmail = google.gmail({ version: 'v1', auth: oauth2Client });

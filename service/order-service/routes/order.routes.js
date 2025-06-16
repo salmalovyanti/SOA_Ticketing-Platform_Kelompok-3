@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const controller = require('../controllers/order.controller');
-const { authenticateToken } = require('../../middleware/authMiddleware');
+const { authenticateToken } = require('../middleware/authMiddleware');
 
 // Endpoint untuk membuat order
 router.post('/', authenticateToken, controller.createOrder);

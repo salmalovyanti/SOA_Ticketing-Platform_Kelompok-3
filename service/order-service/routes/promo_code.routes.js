@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const controller = require('../controllers/promo_code.controller');
-const { authenticateToken } = require('../../middleware/authMiddleware');
+const { authenticateToken } = require('../middleware/authMiddleware');
 
 // Endpoint untuk menambahkan kode promo
 router.post('/', authenticateToken, controller.createPromoCode);

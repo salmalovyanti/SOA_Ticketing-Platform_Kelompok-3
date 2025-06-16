@@ -6,6 +6,7 @@ const OrderDetail = require('./order_detail.model');
 const PromoCode = require('./promo_code.model');
 const Ticket = require('./ticket.model');
 const IssuedTicket = require('./issuedticket');
+const User = require('./user.model');
 
 OrderDetail.belongsTo(Ticket, { foreignKey: 'ticket_id', as: 'ticket' });
 Ticket.hasMany(OrderDetail, { foreignKey: 'ticket_id', as: 'order_detail' });
