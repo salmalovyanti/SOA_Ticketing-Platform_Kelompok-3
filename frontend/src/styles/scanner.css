@@ -1,0 +1,77 @@
+.page-wrapper {
+  background-color: #f9f9f9;
+}
+
+.section {
+  padding: 2rem;
+  background: #e3f2fd;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+#reader-wrapper {
+  background: #fff;
+  padding: 1rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  text-align: center;
+}
+
+#reader {
+  width: 300px;
+  height: 200px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.1);
+}
+
+.scanner-hint {
+  font-size: 0.9rem;
+  color: #666;
+  margin-top: 0.5rem;
+}
+
+.right-text {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #0d47a1;
+}
+
+.result-box {
+  margin: 2rem auto;
+  background-color: #fff;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  max-width: 600px;
+}
+
+.right-text-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.notif-box {
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: bold;
+  max-width: 300px;
+  word-wrap: break-word;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.notif-success {
+  background-color: #CBFFA9;
+  color: #89AA97;
+}
+
+.notif-error {
+  background-color: #FF9B9B;
+  color: #BD574E;
+}

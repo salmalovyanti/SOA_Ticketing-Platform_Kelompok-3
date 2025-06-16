@@ -1,8 +1,8 @@
 const service = require('./ticket.service');
 const { purchaseTicketSchema } = require('./ticket.validations');
-const redisClient = require('../../config/redisClient');
+const { kafkaProducer } = require('../../config/kafkaClient');
 
-// Handler untuk
+// Handler untuk membuat tiket
 exports.createTicket = async (req, res) => {
   try {
     const ticket = await service.create(req.body);
@@ -108,62 +108,6 @@ exports.bulkUploadTickets = async (req, res) => {
     return res.status(400).json({
       message: error.message || 'Terjadi kesalahan saat mengunggah tiket'
     });
-  }
-};
-
-// Handler untuk mengupload queue ke redis
-exports.scanTicket = async (req, res) => {
-  try {
-    const { ticket_code } = req.query; 
-
-    if (!ticket_code) return res.status(400).json({ error: 'ticket_code wajib diisi' });
-
-    const result = await service.processScan(ticket_code);
-
-    const notif = {
-      ticket_code,
-      scanned_at: new Date()
-    };
-
-    let queueMessage;
-
-    if (result.status === 'not_found') {
-      queueMessage = {
-        ...notif,
-        type: 'SCAN_TIKET_INVALID',
-        message: `Gagal scan: Tiket (${ticket_code}) tidak ditemukan.`
-      };
-      await redisClient.rPush('notif_admin_queue', JSON.stringify(queueMessage));
-      return res.status(404).json({ message: 'Tiket tidak ditemukan' });
-    }
-
-    if (result.status === 'used') {
-      queueMessage = {
-        ...notif,
-        type: 'SCAN_TIKET_GAGAL',
-        message: `Gagal scan: Tiket (${ticket_code}) sudah digunakan.`
-      };
-      await redisClient.rPush('notif_admin_queue', JSON.stringify(queueMessage));
-      return res.status(400).json({ message: 'Tiket sudah digunakan' });
-    }
-
-    // Tiket valid dan belum digunakan
-    queueMessage = {
-      ...notif,
-      type: 'SCAN_TIKET_BERHASIL',
-      message: `Berhasil scan: Tiket (${ticket_code}) berhasil digunakan.`
-    };
-    await redisClient.rPush('notif_admin_queue', JSON.stringify(queueMessage));
-
-    res.status(200).json({
-      message: 'Tiket berhasil di-scan dan digunakan',
-      status: 'success',
-      ticket: result.ticket
-    });
-
-  } catch (err) {
-    console.error('❌ Error saat scan tiket:', err);
-    res.status(500).json({ error: 'Server error' });
   }
 };
 
