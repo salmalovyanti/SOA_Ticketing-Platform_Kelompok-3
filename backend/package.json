@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "worker": "node src/workers/redisNotifWorkers.js",
+    "worker": "node src/workers/kafkaNotifWorkers.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

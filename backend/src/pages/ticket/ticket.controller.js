@@ -167,10 +167,10 @@ exports.scanTicket = async (req, res) => {
   }
 };
 
-// Handler untuk mengupload queue ke redis
+// Handler untuk message broker kafka
 exports.scanTicket = async (req, res) => {
   try {
-    const { ticket_code } = req.query; 
+    const { ticket_code } = req.query;
 
     if (!ticket_code) return res.status(400).json({ error: 'ticket_code wajib diisi' });
 
@@ -189,7 +189,10 @@ exports.scanTicket = async (req, res) => {
         type: 'SCAN_TIKET_INVALID',
         message: `Gagal scan: Tiket (${ticket_code}) tidak ditemukan.`
       };
-      await redisClient.rPush('notif_admin_queue', JSON.stringify(queueMessage));
+      await kafkaProducer.send({
+        topic: 'notif_admin_topic',
+        messages: [{ value: JSON.stringify(queueMessage) }]
+      });
       return res.status(404).json({ message: 'Tiket tidak ditemukan' });
     }
 
@@ -199,17 +202,22 @@ exports.scanTicket = async (req, res) => {
         type: 'SCAN_TIKET_GAGAL',
         message: `Gagal scan: Tiket (${ticket_code}) sudah digunakan.`
       };
-      await redisClient.rPush('notif_admin_queue', JSON.stringify(queueMessage));
+      await kafkaProducer.send({
+        topic: 'notif_admin_topic',
+        messages: [{ value: JSON.stringify(queueMessage) }]
+      });
       return res.status(400).json({ message: 'Tiket sudah digunakan' });
     }
 
-    // Tiket valid dan belum digunakan
     queueMessage = {
       ...notif,
       type: 'SCAN_TIKET_BERHASIL',
       message: `Berhasil scan: Tiket (${ticket_code}) berhasil digunakan.`
     };
-    await redisClient.rPush('notif_admin_queue', JSON.stringify(queueMessage));
+    await kafkaProducer.send({
+      topic: 'notif_admin_topic',
+      messages: [{ value: JSON.stringify(queueMessage) }]
+    });
 
     res.status(200).json({
       message: 'Tiket berhasil di-scan dan digunakan',
