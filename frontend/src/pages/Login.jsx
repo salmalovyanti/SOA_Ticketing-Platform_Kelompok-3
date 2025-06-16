@@ -22,6 +22,7 @@ const Login = () => {
             localStorage.setItem('isLoggedIn', 'true');
             localStorage.setItem('userId', data.user.user_id);
             localStorage.setItem('userName', data.user.name); // pastikan backend kirim user
+            localStorage.setItem('role', data.user.role); // simpan role admin/user
 
             navigate('/');
         } catch (err) {
