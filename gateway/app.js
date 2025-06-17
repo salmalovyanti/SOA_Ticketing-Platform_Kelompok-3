@@ -4,9 +4,11 @@ const dotenv = require('dotenv');
 const app = express();
 dotenv.config();
 
+app.use(express.json());
+
 const routes = require('./routes');
 
-app.use(express.json());
+// Mount semua route
 app.use('/', routes);
 
 const PORT = process.env.PORT || 3001;
