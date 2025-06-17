@@ -4,9 +4,9 @@ const options = {
   definition: {
     openapi: '3.0.0',
     info: {
-      title: 'Auth Service API',
+      title: 'Payment Service API',
       version: '1.0.0',
-      description: 'Dokumentasi API Auth Service',
+      description: 'Dokumentasi API Payment Service',
     },
     servers: [
       {

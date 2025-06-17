@@ -16,7 +16,7 @@ const { authenticateToken } = require('../middleware/authMiddleware');
 // Endpoint untuk mengedit preferensi notifikasi user
 /**
  * @swagger
- * /notification-preferences:
+ * /api/notification-preferences:
  *   post:
  *     summary: Perbarui preferensi notifikasi pengguna
  *     tags: [Notification Preferences]

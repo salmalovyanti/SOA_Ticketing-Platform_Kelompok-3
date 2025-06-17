@@ -65,7 +65,7 @@ router.post('/register', (req, res) => {
 
 /**
  * @swagger
- * /auth/register:
+ * /api/auth/register:
  *   post:
  *     summary: Registrasi pengguna baru
  *     tags: [Auth]
@@ -138,7 +138,7 @@ router.post('/login', loginLimiter, async (req, res) => {
 });
 /**
  * @swagger
- * /auth/login:
+ * /api/auth/login:
  *   post:
  *     summary: Login pengguna
  *     tags: [Auth]

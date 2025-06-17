@@ -16,7 +16,7 @@ const { authenticateToken } = require('../middleware/authMiddleware');
 // Endpoint untuk menambahkan tiket ke keranjang
 /**
  * @swagger
- * /cart/add:
+ * /api/cart/add:
  *   post:
  *     summary: Tambahkan tiket ke keranjang
  *     tags: [Cart]
@@ -42,7 +42,7 @@ router.post('/add', authenticateToken, controller.addToCart);
 // Endpoint untuk melihat isi keranjang user
 /**
  * @swagger
- * /cart:
+ * /api/cart:
  *   get:
  *     summary: Lihat isi keranjang user
  *     tags: [Cart]
@@ -57,7 +57,7 @@ router.get('/', authenticateToken, controller.getMyCart);
 // Endpoint untuk checkout isi keranjang dan membuat order
 /**
  * @swagger
- * /cart/checkout:
+ * /api/cart/checkout:
  *   post:
  *     summary: Checkout isi keranjang dan buat order
  *     tags: [Cart]

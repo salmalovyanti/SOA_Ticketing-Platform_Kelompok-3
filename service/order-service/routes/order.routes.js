@@ -13,7 +13,7 @@ const { authenticateToken } = require('../middleware/authMiddleware');
 // Endpoint untuk membuat order
 /**
  * @swagger
- * /order:
+ * /api/order:
  *   post:
  *     summary: Buat order baru
  *     tags: [Order]
@@ -28,7 +28,7 @@ router.post('/', authenticateToken, controller.createOrder);
 // Endpoint untuk menampilkan seluruh data order
 /**
  * @swagger
- * /order:
+ * /api/order:
  *   get:
  *     summary: Ambil semua order
  *     tags: [Order]
@@ -43,7 +43,7 @@ router.get('/', authenticateToken, controller.getAllOrders);
 // Endpoint untuk menampilkan satu data order
 /**
  * @swagger
- * /order/{id}:
+ * /api/order/{id}:
  *   get:
  *     summary: Ambil order berdasarkan ID
  *     tags: [Order]
@@ -64,7 +64,7 @@ router.get('/:id', authenticateToken, controller.getOrderById);
 // Endpoint untuk mengedit data order
 /**
  * @swagger
- * /order/{id}:
+ * /api/order/{id}:
  *   put:
  *     summary: Perbarui data order
  *     tags: [Order]
@@ -85,7 +85,7 @@ router.put('/:id', authenticateToken, controller.updateOrder);
 // Endpoint untuk menghapus data order
 /**
  * @swagger
- * /order/{id}:
+ * /api/order/{id}:
  *   delete:
  *     summary: Hapus order
  *     tags: [Order]
@@ -106,7 +106,7 @@ router.delete('/:id', authenticateToken, controller.deleteOrder);
 // Endpoint untuk menampilkan seluruh tiket yang dibeli user
 /**
  * @swagger
- * /order/my-tickets:
+ * /api/order/my-tickets:
  *   get:
  *     summary: Ambil semua tiket yang dibeli user
  *     tags: [Order]
@@ -121,7 +121,7 @@ router.get('/my-tickets', authenticateToken, controller.getMyTickets);
 // Endpoint untuk mengajukan refund tiket
 /**
  * @swagger
- * /order/request-refund:
+ * /api/order/request-refund:
  *   post:
  *     summary: Ajukan permintaan refund
  *     tags: [Order]

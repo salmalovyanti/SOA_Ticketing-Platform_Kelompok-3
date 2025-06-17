@@ -14,7 +14,7 @@ const { authenticateToken } = require('../middleware/authMiddleware');
 // Endpoint untuk scan tiket barcode
 /**
  * @swagger
- * /ticket/scan-ticket:
+ * /api/ticket/scan-ticket:
  *   get:
  *     summary: Scan tiket menggunakan barcode
  *     tags: [Ticket]
@@ -29,7 +29,7 @@ router.get('/scan-ticket', authenticateToken, controller.scanTicket);
 // Endpoint untuk menambahkan jenis tiket ke event
 /**
  * @swagger
- * /ticket:
+ * /api/ticket:
  *   post:
  *     summary: Tambah jenis tiket ke event
  *     tags: [Ticket]
@@ -49,7 +49,7 @@ router.post('/', authenticateToken, controller.createTicket);
 // Endpoint untuk menampilkan seluruh data tiket
 /**
  * @swagger
- * /ticket:
+ * /api/ticket:
  *   get:
  *     summary: Ambil semua tiket
  *     tags: [Ticket]
@@ -64,7 +64,7 @@ router.get('/', authenticateToken, controller.getAllTickets);
 // Endpoint untuk menampilkan satu data tiket
 /**
  * @swagger
- * /ticket/{id}:
+ * /api/ticket/{id}:
  *   get:
  *     summary: Ambil detail tiket berdasarkan ID
  *     tags: [Ticket]
@@ -85,7 +85,7 @@ router.get('/:id', authenticateToken, controller.getTicketById);
 // Endpoint untuk mengedit data tiket
 /**
  * @swagger
- * /ticket/{id}:
+ * /api/ticket/{id}:
  *   put:
  *     summary: Update data tiket
  *     tags: [Ticket]
@@ -106,7 +106,7 @@ router.put('/:id', authenticateToken, controller.updateTicket);
 // Endpoint untuk menghapus data tiket
 /**
  * @swagger
- * /ticket/{id}:
+ * /api/ticket/{id}:
  *   delete:
  *     summary: Hapus data tiket
  *     tags: [Ticket]
@@ -127,7 +127,7 @@ router.delete('/:id', authenticateToken, controller.deleteTicket);
 // Endpoint untuk membeli tiket
 /**
  * @swagger
- * /ticket/purchase-ticket:
+ * /api/ticket/purchase-ticket:
  *   post:
  *     summary: Beli tiket
  *     tags: [Ticket]
@@ -142,7 +142,7 @@ router.post('/purchase-ticket', authenticateToken, controller.purchaseTicket);
 // Endpoint untuk upload tiket secara massal
 /**
  * @swagger
- * /ticket/bulk-upload:
+ * /api/ticket/bulk-upload:
  *   post:
  *     summary: Upload tiket secara massal
  *     tags: [Ticket]

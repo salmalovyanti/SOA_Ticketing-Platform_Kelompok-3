@@ -92,7 +92,7 @@ router.put('/:id', authenticateToken, controller.updateLocation);
 // Endpoint untuk menghapus lokasi
 /**
  * @swagger
- * /location/{id}:
+ * /api/location/{id}:
  *   delete:
  *     summary: Hapus lokasi berdasarkan ID
  *     tags: [Location]

@@ -4,9 +4,9 @@ const options = {
   definition: {
     openapi: '3.0.0',
     info: {
-      title: 'Auth Service API',
+      title: 'Ticket Service API',
       version: '1.0.0',
-      description: 'Dokumentasi API Auth Service',
+      description: 'Dokumentasi API Ticket Service',
     },
     servers: [
       {

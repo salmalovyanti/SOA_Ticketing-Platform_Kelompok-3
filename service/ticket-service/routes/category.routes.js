@@ -12,7 +12,7 @@ const { authenticateToken } = require('../middleware/authMiddleware');
 // Endpoint untuk menampilkan keseluruhan kategori event
 /**
  * @swagger
- * /category:
+ * /api/category:
  *   get:
  *     summary: Ambil semua kategori event
  *     tags: [Category]
@@ -25,7 +25,7 @@ router.get('/', controller.getAllCategories);
 // Endpoint untuk menambahkan kategori event
 /**
  * @swagger
- * /category:
+ * /api/category:
  *   post:
  *     summary: Tambah kategori event
  *     tags: [Category]
@@ -49,7 +49,7 @@ router.post('/', authenticateToken, controller.createCategory);
 // Endpoint untuk melihat satu kategori event
 /**
  * @swagger
- * /category/{id}:
+ * /api/category/{id}:
  *   get:
  *     summary: Ambil detail kategori event
  *     tags: [Category]
@@ -68,7 +68,7 @@ router.get('/:id', controller.getCategoryById);
 // Endpoint untuk mengedit kategori event
 /**
  * @swagger
- * /category/{id}:
+ * /api/category/{id}:
  *   put:
  *     summary: Update kategori event
  *     tags: [Category]
@@ -98,7 +98,7 @@ router.put('/:id', authenticateToken, controller.updateCategory);
 // Endpoint untuk menghapus satu kategori event
 /**
  * @swagger
- * /category/{id}:
+ * /api/category/{id}:
  *   delete:
  *     summary: Hapus kategori event
  *     tags: [Category]

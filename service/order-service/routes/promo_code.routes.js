@@ -12,7 +12,7 @@ const { authenticateToken } = require('../middleware/authMiddleware');
 // Endpoint untuk menambahkan kode promo
 /**
  * @swagger
- * /promo-code:
+ * /api/promo-code:
  *   post:
  *     summary: Tambahkan kode promo baru
  *     tags: [Promo Code]
@@ -38,7 +38,7 @@ router.post('/', authenticateToken, controller.createPromoCode);
 // Endpoint untuk menggunakan kode promo saat melakukan pembelian
 /**
  * @swagger
- * /promo-code/redeem-promo:
+ * /api/promo-code/redeem-promo:
  *   post:
  *     summary: Gunakan kode promo saat pembelian
  *     tags: [Promo Code]

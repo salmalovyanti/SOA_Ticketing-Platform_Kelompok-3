@@ -28,7 +28,7 @@ const upload = multer({ storage });
 // Endpoint untuk mengupload foto profil user
 /**
  * @swagger
- * /users/{id}/avatar:
+ * /api/users/{id}/avatar:
  *   post:
  *     summary: Upload foto profil user
  *     tags: [Users]
@@ -52,13 +52,38 @@ router.post('/:id/avatar', upload.single('avatar'), authenticateToken, controlle
 
 
 // Endpoint untuk menambahkan user
+/**
+ * @swagger
+ * /api/users:
+ *   post:
+ *     summary: Tambah user baru
+ *     tags: [Users]
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *               email:
+ *                 type: string
+ *               password:
+ *                 type: string
+ *     responses:
+ *       201:
+ *         description: User berhasil dibuat
+ */
 router.post('/', authenticateToken, controller.createUser);
 
 
 // Endpoint untuk menampilkan seluruh data user
 /**
  * @swagger
- * /users:
+ * /api/users:
  *   get:
  *     summary: Ambil semua data user
  *     tags: [Users]
@@ -74,7 +99,7 @@ router.get('/', authenticateToken, controller.getAllUsers);
 // Endpoint untuk menampilkan satu data user
 /**
  * @swagger
- * /users/{id}:
+ * /api/users/{id}:
  *   get:
  *     summary: Ambil user berdasarkan ID
  *     tags: [Users]
@@ -91,12 +116,120 @@ router.get('/', authenticateToken, controller.getAllUsers);
 router.get('/:id', authenticateToken, controller.getUserById);
 
 // Endpoint untuk mengedit data user
+/**
+ * @swagger
+ * /api/users/{id}:
+ *   put:
+ *     summary: Update data user (admin)
+ *     tags: [Users]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *               email:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: Data user berhasil diperbarui
+ */
 router.put('/:id', authenticateToken, controller.updateUser);
 
 // Endpoint untuk menghapus data user
+/**
+ * @swagger
+ * /api/users/{id}:
+ *   put:
+ *     summary: Update data user (admin)
+ *     tags: [Users]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *               email:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: Data user berhasil diperbarui
+ */
+router.put('/:id', authenticateToken, controller.updateUser);
+
+// Endpoint untuk menghapus data user
+/**
+ * @swagger
+ * /api/users/{id}:
+ *   delete:
+ *     summary: Hapus user berdasarkan ID
+ *     tags: [Users]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       200:
+ *         description: User berhasil dihapus
+ */
 router.delete('/:id', authenticateToken, controller.deleteUser);
 
 // Endpoint untuk mengedit data profil user (hanya untuk data yang dapat dilihat user)
+/**
+ * @swagger
+ * /api/users/{id}/profile:
+ *   put:
+ *     summary: Update profil user
+ *     tags: [Users]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *               phone:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: Profil user berhasil diperbarui
+ */
 router.put('/:id/profile', authenticateToken, controller.updateUserProfile);
 
 module.exports = router;

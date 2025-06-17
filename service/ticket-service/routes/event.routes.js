@@ -14,7 +14,7 @@ const ticketController = require('../controllers/ticket.controller');
 // Endpoint untuk menampilkan seluruh data event
 /**
  * @swagger
- * /event:
+ * /api/event:
  *   get:
  *     summary: Ambil semua data event
  *     tags: [Event]
@@ -27,7 +27,7 @@ router.get('/', controller.getAllEvents);
 // Endpoint untuk menambahkan event
 /**
  * @swagger
- * /event:
+ * /api/event:
  *   post:
  *     summary: Tambah event baru
  *     tags: [Event]
@@ -48,7 +48,7 @@ router.post('/', authenticateToken, controller.createEvent);
 // Endpoint untuk melihat event berdasarkan nama kategori
 /**
  * @swagger
- * /event/category/{id}:
+ * /api/event/category/{id}:
  *   get:
  *     summary: Ambil event berdasarkan kategori
  *     tags: [Event]
@@ -67,7 +67,7 @@ router.get('/category/:id', controller.getByCategory);
 // Endpoint untuk melihat event berdasarkan lokasi
 /**
  * @swagger
- * /event/location/{id}:
+ * /api/event/location/{id}:
  *   get:
  *     summary: Ambil event berdasarkan lokasi
  *     tags: [Event]
@@ -86,7 +86,7 @@ router.get('/location/:id', controller.getByLocation);
 // Endpoint untuk melihat tiket berdasarkan satu event
 /**
  * @swagger
- * /event/{eventId}/ticket:
+ * /api/event/{eventId}/ticket:
  *   get:
  *     summary: Ambil tiket dari satu event
  *     tags: [Event]
@@ -105,7 +105,7 @@ router.get('/:eventId/ticket', ticketController.getByEventId);
 // Endpoint untuk mencari event berdasarkan nama event
 /**
  * @swagger
- * /event/search:
+ * /api/event/search:
  *   get:
  *     summary: Cari event berdasarkan nama
  *     tags: [Event]
@@ -124,7 +124,7 @@ router.get('/search', controller.searchEvents);
 // Endpoint untuk melihat detail event
 /**
  * @swagger
- * /event/{id}:
+ * /api/event/{id}:
  *   get:
  *     summary: Ambil detail event berdasarkan ID
  *     tags: [Event]
@@ -143,7 +143,7 @@ router.get('/:id', controller.getEventById);
 // Endpoint untuk update detail event
 /**
  * @swagger
- * /event/{id}:
+ * /api/event/{id}:
  *   put:
  *     summary: Update event
  *     tags: [Event]
@@ -164,7 +164,7 @@ router.put('/:id', authenticateToken, controller.updateEvent);
 // Endpoint untuk menghapus event
 /**
  * @swagger
- * /event/{id}:
+ * /api/event/{id}:
  *   delete:
  *     summary: Hapus event
  *     tags: [Event]

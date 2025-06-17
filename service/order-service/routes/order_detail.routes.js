@@ -14,7 +14,7 @@ const { authenticateToken } = require('../middleware/authMiddleware');
 // Endpoint untuk membuat order detail
 /**
  * @swagger
- * /order-detail:
+ * /api/order-detail:
  *   post:
  *     summary: Buat detail order
  *     tags: [Order Detail]
@@ -42,7 +42,7 @@ router.post('/', authenticateToken, controller.createOrderDetail);
 // Endpoint untuk menampilkan seluruh data order detail
 /**
  * @swagger
- * /order-detail:
+ * /api/order-detail:
  *   get:
  *     summary: Ambil semua data order detail
  *     tags: [Order Detail]
@@ -57,7 +57,7 @@ router.get('/', authenticateToken, controller.getAllOrderDetails);
 // Endpoint untuk menampilkan satu data order detail
 /**
  * @swagger
- * /order-detail/{id}:
+ * /api/order-detail/{id}:
  *   get:
  *     summary: Ambil detail order berdasarkan ID
  *     tags: [Order Detail]
@@ -78,7 +78,7 @@ router.get('/:id', authenticateToken, controller.getOrderDetailById);
 // Endpoint untuk mengedit data order detail
 /**
  * @swagger
- * /order-detail/{id}:
+ * /api/order-detail/{id}:
  *   put:
  *     summary: Update detail order
  *     tags: [Order Detail]
@@ -108,7 +108,7 @@ router.put('/:id', authenticateToken, controller.updateOrderDetail);
 // Endpoint untuk menghapus data order detail
 /**
  * @swagger
- * /order-detail/{id}:
+ * /api/order-detail/{id}:
  *   delete:
  *     summary: Hapus detail order
  *     tags: [Order Detail]

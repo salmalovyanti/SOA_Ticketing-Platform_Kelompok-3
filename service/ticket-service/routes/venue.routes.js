@@ -13,7 +13,7 @@ const { authenticateToken } = require('../middleware/authMiddleware');
 // Endpoint untuk menampilkan seluruh data venue
 /**
  * @swagger
- * /venue:
+ * /api/venue:
  *   get:
  *     summary: Ambil semua data venue
  *     tags: [Venue]
@@ -26,7 +26,7 @@ router.get('/', controller.getAllVenues);
 // Endpoint untuk menambahkan data venue
 /**
  * @swagger
- * /venue:
+ * /api/venue:
  *   post:
  *     summary: Tambah data venue
  *     tags: [Venue]
@@ -46,7 +46,7 @@ router.post('/', authenticateToken, controller.createVenue);
 // Endpoint untuk menampilkan satu data venue
 /**
  * @swagger
- * /venue/{id}:
+ * /api/venue/{id}:
  *   get:
  *     summary: Ambil venue berdasarkan ID
  *     tags: [Venue]
@@ -65,7 +65,7 @@ router.get('/:id', controller.getVenueById);
 // Endpoint untuk mengedit data venue
 /**
  * @swagger
- * /venue/{id}:
+ * /api/venue/{id}:
  *   put:
  *     summary: Update venue
  *     tags: [Venue]
@@ -86,7 +86,7 @@ router.put('/:id', authenticateToken, controller.updateVenue);
 // Endpoint untuk menghapus data venue
 /**
  * @swagger
- * /venue/{id}:
+ * /api/venue/{id}:
  *   delete:
  *     summary: Hapus venue
  *     tags: [Venue]

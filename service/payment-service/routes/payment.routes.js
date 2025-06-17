@@ -13,7 +13,7 @@ const { authenticateToken } = require('../middleware/authMiddleware');
 // Endpoint untuk membatalkan pembelian tiket
 /**
  * @swagger
- * /payment/cancel-ticket:
+ * /api/payment/cancel-ticket:
  *   post:
  *     summary: Batalkan pembelian tiket
  *     tags: [Payment]

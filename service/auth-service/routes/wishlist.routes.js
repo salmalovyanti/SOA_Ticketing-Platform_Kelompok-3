@@ -13,7 +13,7 @@ const { authenticateToken } = require('../middleware/authMiddleware');
 // Endpoint untuk menambahkan event ke wishlist
 /**
  * @swagger
- * /wishlist:
+ * /api/wishlist:
  *   post:
  *     summary: Tambah event ke wishlist
  *     tags: [Wishlist]
@@ -37,6 +37,8 @@ router.post('/', authenticateToken, wishlistController.addToWishlist);
 
 // Endpoint untuk menampilkan daftar wishlist 
 /**
+ * @swagger
+ * /api/wishlist:
  *   get:
  *     summary: Ambil semua wishlist pengguna
  *     tags: [Wishlist]
