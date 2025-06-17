@@ -56,6 +56,46 @@ router.post('/register', (req, res) => {
     });
 });
 
+/**
+ * @swagger
+ * tags:
+ *   name: Auth
+ *   description: Authentikasi pengguna (Login & Register)
+ */
+
+/**
+ * @swagger
+ * /auth/register:
+ *   post:
+ *     summary: Registrasi pengguna baru
+ *     tags: [Auth]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - name
+ *               - email
+ *               - password
+ *             properties:
+ *               name:
+ *                 type: string
+ *               email:
+ *                 type: string
+ *               password:
+ *                 type: string
+ *     responses:
+ *       201:
+ *         description: Registrasi berhasil
+ *       400:
+ *         description: Field tidak lengkap
+ *       500:
+ *         description: Server error
+ */
+
+
 // LOGIN
 router.post('/login', loginLimiter, async (req, res) => {
     const { email, password } = req.body;
@@ -94,31 +134,37 @@ router.post('/login', loginLimiter, async (req, res) => {
                 email: user.email
             }
         });
-
-        // // Bandingkan password yang diinput dengan hash di database
-        // bcrypt.compare(password, user.password_hash, (err, isMatch) => {
-        //     if (err) return res.status(500).send(err);
-
-        //     // Jika password tidak cocok
-        //     if (!isMatch) {
-        //         return res.status(400).send({ message: 'Password salah' });
-        //     }
-
-        //     // Jika cocok, buat JWT token
-        //     const token = generateToken(user); // gunakan fungsi generateToken
-            
-
-        //     res.status(200).send({
-        //         message: 'Login sukses',
-        //         token,
-        //         user: {
-        //             user_id: user.user_id,
-        //             name: user.name,
-        //             email: user.email
-        //         }
-        //     });
-        // });
     });
 });
+/**
+ * @swagger
+ * /auth/login:
+ *   post:
+ *     summary: Login pengguna
+ *     tags: [Auth]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - email
+ *               - password
+ *             properties:
+ *               email:
+ *                 type: string
+ *               password:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: Login sukses dan token dikembalikan
+ *       400:
+ *         description: Email tidak ditemukan atau password salah
+ *       429:
+ *         description: Terlalu banyak percobaan login
+ *       500:
+ *         description: Server error
+ */
 
 module.exports = router;

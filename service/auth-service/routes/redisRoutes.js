@@ -44,8 +44,42 @@ const {
 
 // Routes
 
+/**
+ * @swagger
+ * tags:
+ *   name: Redis Features
+ *   description: Cache, Queue, Stock, Locking, dan lainnya
+ */
+
 // Caching data event (popular/preload)
+/**
+ * @swagger
+ * /redis/events/popular:
+ *   get:
+ *     summary: Ambil event populer dari cache Redis
+ *     tags: [Redis Features]
+ *     responses:
+ *       200:
+ *         description: Daftar event populer
+ */
 router.get('/events/popular', getPopularEvents);
+
+/**
+ * @swagger
+ * /redis/event/{id}/preload:
+ *   get:
+ *     summary: Preload data event ke Redis
+ *     tags: [Redis Features]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Event berhasil dimuat ke cache
+ */
 router.get('/event/:id/preload', preloadEvent);
 
 // Token management
@@ -60,12 +94,30 @@ router.post('/search', saveQuery);
 router.post('/search/history', getSearchHistory);
 
 // Queue system
+/**
+ * @swagger
+ * /redis/queue/{eventId}:
+ *   post:
+ *     summary: Masukkan user ke dalam antrean war tiket
+ *     tags: [Redis Features]
+ *     parameters:
+ *       - in: path
+ *         name: eventId
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: User berhasil diantri
+ */
 router.post('/queue/:eventId', enqueueUser);
 
 // Stock ticket
+
 router.post('/stock/update', updateStock);
 
 // Booking lock & double booking prevention
+
 router.post('/booking/lock', lockSeat);
 router.post('/booking/check-lock', preventDoubleBooking);
 

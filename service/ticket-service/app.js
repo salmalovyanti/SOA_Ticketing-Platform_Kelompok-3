@@ -2,10 +2,11 @@ require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const { connectToDatabase } = require('./config/db'); // Optional kalau mau testing koneksi
+const swaggerSpec = require('./swagger/swagger');
+const swaggerUi = require('swagger-ui-express');
 
 const app = express();
-const PORT = process.env.PORT || 3003;
+const PORT = process.env.PORT || 3005;
 
 // Import Routes
 const ticketRoutes = require('./routes/ticket.routes');
@@ -26,12 +27,16 @@ app.use('/api/category', categoryRoutes);
 app.use('/api/location', locationRoutes);
 app.use('/api/venue', venueRoutes);
 
+// Swagger setup
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
 // Health check
 app.get('/', (req, res) => {
-  res.send('🎫 Ticket Service is running');
+  res.send('☑️ Ticket Service is running');
 });
 
 // Start Server
 app.listen(PORT, () => {
-  console.log(`🎫 Ticket Service running at http://localhost:${PORT}`);
+  console.log(`☑️ Ticket Service running at http://localhost:${PORT}`);
+  console.log(`Swagger docs at http://localhost:${PORT}/api-docs`);
 });

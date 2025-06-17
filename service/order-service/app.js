@@ -1,6 +1,8 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const swaggerSpec = require('./swagger/swagger');
+const swaggerUi = require('swagger-ui-express');
 require('dotenv').config();
 
 // Redis client kalau digunakan
@@ -17,7 +19,7 @@ const orderDetailRoutes = require('./routes/order_detail.routes');
 const promoCodeRoutes = require('./routes/promo_code.routes');
 
 const app = express();
-const port = process.env.PORT || 3004; // Sesuaikan port untuk order-service
+const PORT = process.env.PORT || 3003; // Sesuaikan port untuk order-service
 
 // Middleware
 app.use(cors());
@@ -29,6 +31,9 @@ app.use('/api/order', orderRoutes);
 app.use('/api/cart', cartRoutes);
 app.use('/api/order-detail', orderDetailRoutes);
 app.use('/api/promo-code', promoCodeRoutes);
+
+// Swagger setup
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 // Route untuk menerima callback dari Google OAuth2
 app.get('/oauth2callback', async (req, res) => {
@@ -54,17 +59,13 @@ app.get('/success', (req, res) => {
   res.send('OAuth2 authentication successful! You can now send emails.');
 });
 
-// // Cek apakah Redis terhubung (jika digunakan)
-// redisClient.connect().then(() => {
-//   console.log('Redis connected');
-// }).catch(console.error);
-
 // Health check
 app.get('/', (req, res) => {
   res.send('☑️ Order Service is running');
 });
 
 // Start Server
-app.listen(port, () => {
-  console.log(`☑️ Order Service running at http://localhost:${port}`);
+app.listen(PORT, () => {
+  console.log(`☑️ Order Service running at http://localhost:${PORT}`);
+  console.log(`Swagger docs at http://localhost:${PORT}/api-docs`);
 });
