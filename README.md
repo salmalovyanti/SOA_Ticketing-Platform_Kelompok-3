@@ -1,15 +1,16 @@
 # Ticketing Platform 
 
-## Aplication Name
-Tikeroo
+## Aplication Name: Tikeroo
 
-## Team - SOA Kelompok 5
-
-| NIM         | Name                    |
-|-------------|-------------------------|
-| 2210511069  | Salma Nabila Lovyanti   |
-| 2210511071  | Mahira Afifa Mulia      |
-| 2210511093  | Dini Rahmawati          |
+---
+## API Gateway & Ports Mapping
+| Service            | Path Base                 | Port   | Keterangan                                      |
+| ------------------ | ------------------------- | ------ | ----------------------------------------------- |
+| API Gateway     | `/api/...`                | `3001` | Entry point utama semua request dari client     |
+| Auth Service    | `/api/auth`, `/api/users`, `/api/wishlist`,  | `3002` | Registrasi, login, profil user, wishlist, dsb   |
+| Ticket Service  | `/api/category`, `/api/location`,`/api/event`, `/api/ticket`, `/api/venue`  | `3003` | Manajemen event, tiket, kategori, venue, lokasi |
+| Order Service   | `/api/cart`, `/api/order_detail`, `/api/order`, `/api/promo_code`,  | `3004` | Cart, pemesanan tiket, promo, detail pesanan    |
+| Payment Service | `/api/payments`           | `3005` | Pembayaran dan verifikasi transaksi             |
 
 ---
 
